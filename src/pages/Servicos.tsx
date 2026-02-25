@@ -129,6 +129,8 @@ import lavadaHero from '@/assets/lavada-detalhada/IMG_9176.jpg';
 import lavadaGal1 from '@/assets/lavada-detalhada/IMG_1237.jpg';
 import lavadaGal2 from '@/assets/lavada-detalhada/IMG_2154.jpg';
 import lavadaGal3 from '@/assets/lavada-detalhada/IMG_9365.jpg';
+import lavadaGal4 from '@/assets/lavada-detalhada/IMG_1258.jpg';
+import lavadaGal5 from '@/assets/lavada-detalhada/IMG_2082.jpg';
 // Videos served from public/ for proper HTTP range request support
 const lavadaVideo = '/videos/lavada-hero.mp4';
 const polimentoVideo = '/videos/polimento-hero.mp4';
@@ -141,20 +143,25 @@ import polimentoHero from '@/assets/polimento/IMG_0992.jpg';
 import polimentoGal1 from '@/assets/polimento/IMG_1751.jpg';
 import polimentoGal2 from '@/assets/polimento/IMG_9439.jpg';
 import polimentoGal3 from '@/assets/polimento/IMG_9440.jpg';
+import polimentoGal4 from '@/assets/polimento/IMG_4500.jpg';
 
 // Vitrificação
 import vitrificacaoHero from '@/assets/vitrificacao/IMG_4034.jpg';
 import vitrificacaoGal1 from '@/assets/vitrificacao/IMG_4051.jpg';
+import vitrificacaoGal2 from '@/assets/vitrificacao/IMG_4035.jpg';
 
 // PPF
 import ppfHero from '@/assets/ppf/IMG_0212.jpg';
 import ppfGal1 from '@/assets/ppf/IMG_1288.jpg';
 import ppfGal2 from '@/assets/ppf/IMG_1404.jpg';
 import ppfGal3 from '@/assets/ppf/IMG_2129.jpg';
+import ppfGal4 from '@/assets/ppf/IMG_2179.jpg';
+import ppfGal5 from '@/assets/ppf/IMG_9886.jpg';
 
 // Higienização
 import higienizacaoHero from '@/assets/higienizacao/IMG_0056.jpg';
 import higienizacaoGal1 from '@/assets/higienizacao/5f4459e2-2028-46a2-8920-66dee302caff.jpg';
+import higienizacaoGal2 from '@/assets/higienizacao/IMG_0057.jpg';
 
 // Película (no dedicated folder)
 import peliculaHero from '@/assets/pelicula-protecao-solar/pelicula-protecao.jpeg';
@@ -167,7 +174,7 @@ const services = [
     price: 'A partir de R$ 150',
     heroImage: lavadaHero,
     heroVideo: lavadaVideo,
-    gallery: [lavadaGal1, lavadaGal2, lavadaGal3],
+    gallery: [lavadaGal1, lavadaGal2, lavadaGal3, lavadaGal4, lavadaGal5],
     slug: 'lavagem-detalhada',
   },
   {
@@ -177,7 +184,7 @@ const services = [
     price: 'A partir de R$ 500',
     heroImage: polimentoHero,
     heroVideo: polimentoVideo,
-    gallery: [polimentoGal1, polimentoGal2, polimentoGal3],
+    gallery: [polimentoGal1, polimentoGal2, polimentoGal3, polimentoGal4],
     slug: 'polimento-tecnico',
   },
   {
@@ -187,7 +194,7 @@ const services = [
     price: 'A partir de R$ 1.200',
     heroImage: vitrificacaoHero,
     heroVideo: vitrificacaoVideo,
-    gallery: [vitrificacaoGal1],
+    gallery: [vitrificacaoGal1, vitrificacaoGal2],
     slug: 'vitrificacao-pintura',
   },
   {
@@ -207,7 +214,7 @@ const services = [
     price: 'Sob consulta',
     heroImage: ppfHero,
     heroVideo: ppfVideo,
-    gallery: [ppfGal1, ppfGal2, ppfGal3],
+    gallery: [ppfGal1, ppfGal2, ppfGal3, ppfGal4, ppfGal5],
     slug: 'ppf-protecao-pintura',
   },
   {
@@ -217,7 +224,7 @@ const services = [
     price: 'A partir de R$ 350',
     heroImage: higienizacaoHero,
     heroVideo: higienizacaoVideo,
-    gallery: [higienizacaoGal1],
+    gallery: [higienizacaoGal1, higienizacaoGal2],
     slug: 'higienizacao-interna',
   },
 ];
@@ -242,7 +249,7 @@ const Servicos = () => {
     <>
       <SEOHead
         title="Serviços de Estética Automotiva Premium em Uberlândia"
-        description="Conheça nossos serviços: Polimento Técnico, Vitrificação 9H, PPF, Higienização Interna e Lavagem Detalhada. Excelência em Uberlândia."
+        description="Serviços de estética automotiva premium em Uberlândia: polimento técnico, vitrificação cerâmica 9H, PPF, higienização interna e lavagem detalhada. Solicite seu orçamento via WhatsApp."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'ItemList',
@@ -289,14 +296,14 @@ const Servicos = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7 }}
-                  className="relative aspect-video overflow-hidden bg-black"
+                  className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-black rounded-sm"
                 >
                   {service.heroVideo ? (
                     <ServiceMedia src={service.heroVideo} poster={service.heroImage} />
                   ) : (
                     <img
                       src={service.heroImage}
-                      alt={service.title}
+                      alt={`${service.title} – serviço de estética automotiva Prime Detail Uberlândia`}
                       className="h-full w-full object-cover"
                     />
                   )}
@@ -322,21 +329,23 @@ const Servicos = () => {
                   <p className="mb-8 font-condensed text-sm font-bold uppercase tracking-wider text-accent">
                     {service.price}
                   </p>
-                  <a
-                    href={`https://wa.me/5534984033956?text=Gostaria de saber mais sobre ${encodeURIComponent(service.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 brand-gradient px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-opacity hover:opacity-90"
-                  >
-                    Consultar Orçamento <ArrowRight size={14} />
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                      href={`https://wa.me/5534984033956?text=Gostaria de saber mais sobre ${encodeURIComponent(service.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 brand-gradient px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+                    >
+                      Consultar Orçamento <ArrowRight size={14} />
+                    </a>
 
-                  <Link
-                    to={`/servicos/${service.slug}`}
-                    className="ml-4 inline-flex items-center gap-2 border border-white/20 px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-colors hover:bg-white/10"
-                  >
-                    Ver Detalhes <ArrowRight size={14} />
-                  </Link>
+                    <Link
+                      to={`/servicos/${service.slug}`}
+                      className="inline-flex items-center justify-center gap-2 border border-white/20 px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+                    >
+                      Ver Detalhes <ArrowRight size={14} />
+                    </Link>
+                  </div>
                 </motion.div>
               </div>
             </div>

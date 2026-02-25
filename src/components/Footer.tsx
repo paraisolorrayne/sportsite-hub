@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border">
+    <footer aria-label="Rodapé do site" className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
@@ -10,7 +10,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center">
               <img
                 src="/logo_prime.png"
-                alt="Prime Detail"
+                alt="Prime Detail – Estética Automotiva em Uberlândia"
                 className="h-12 w-auto object-contain"
               />
             </Link>

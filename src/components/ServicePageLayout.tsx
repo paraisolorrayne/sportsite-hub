@@ -178,7 +178,7 @@ const ServicePageLayout = ({
                     {heroVideo ? (
                         <ServiceMedia src={heroVideo} poster={heroImage} />
                     ) : (
-                        <img src={heroImage} alt={title} className="h-full w-full object-cover" />
+                        <img src={heroImage} alt={`${title} – serviço de estética automotiva Prime Detail Uberlândia`} className="h-full w-full object-cover" />
                     )}
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
@@ -190,7 +190,7 @@ const ServicePageLayout = ({
                         transition={{ duration: 0.8 }}
                     >
                         <div className="h-1 w-16 brand-gradient mx-auto mb-6" />
-                        <h1 className="text-4xl md:text-7xl font-heading mb-4 text-white uppercase tracking-tighter">
+                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading mb-4 text-white uppercase tracking-tighter">
                             {title.split(' ')[0]} <span className="text-gradient-brand">{title.split(' ').slice(1).join(' ')}</span>
                         </h1>
                         <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto font-body">
@@ -209,12 +209,12 @@ const ServicePageLayout = ({
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-3xl font-heading mb-6 text-white uppercase tracking-wider">O que é o <span className="text-primary">Serviço?</span></h2>
+                            <h2 className="text-2xl md:text-3xl font-heading mb-6 text-white uppercase tracking-wider">O que é o <span className="text-primary">Serviço?</span></h2>
                             <div className="prose prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed max-w-none">
                                 <p className="whitespace-pre-line">{description}</p>
                             </div>
 
-                            <div className="mt-12 p-8 bg-card border border-border rounded-lg">
+                            <div className="mt-12 p-6 md:p-8 bg-card border border-border rounded-lg">
                                 <h3 className="text-xl font-heading mb-4 text-white uppercase tracking-widest">{pricing.includes('A partir') ? 'Investimento Estimado' : 'Orçamento'}</h3>
                                 <p className="text-3xl font-heading text-primary">{pricing}</p>
                                 <p className="text-sm text-muted-foreground mt-2 font-condensed">* Valores variam conforme o tamanho e estado do veículo.</p>
@@ -222,7 +222,7 @@ const ServicePageLayout = ({
                                     href={`https://wa.me/5534984033956?text=Gostaria de um orçamento para ${encodeURIComponent(title)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-8 inline-flex items-center gap-3 px-8 py-4 brand-gradient text-white font-heading uppercase tracking-widest transition-opacity hover:opacity-90 glow-brand"
+                                    className="mt-8 inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 brand-gradient text-white font-heading text-sm md:text-base uppercase tracking-widest transition-opacity hover:opacity-90 glow-brand"
                                 >
                                     Agendar via WhatsApp <ArrowRight size={18} />
                                 </a>
@@ -269,11 +269,12 @@ const ServicePageLayout = ({
             {gallery && gallery.length > 0 && (
                 <section className="py-20 border-t border-border/30">
                     <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-heading mb-12 text-center text-white">Resultados <span className="text-gradient-brand">Reais</span></h2>
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <h2 className="text-3xl font-heading mb-4 text-center text-white">Processo & <span className="text-gradient-brand">Resultados</span></h2>
+                        <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">Acompanhe o passo a passo e os resultados reais do nosso trabalho.</p>
+                        <div className={`grid gap-4 ${gallery.length <= 4 ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
                             {gallery.map((img, i) => (
-                                <div key={i} className="aspect-square overflow-hidden border border-border/50">
-                                    <img src={img} alt="" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                                <div key={i} className="aspect-square overflow-hidden border border-border/50 group">
+                                    <img src={img} alt={`${title} – foto ${i + 1} do processo de ${title.toLowerCase()} na Prime Detail`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                                 </div>
                             ))}
                         </div>

@@ -1,6 +1,8 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
 import heroImage from '@/assets/higienizacao/IMG_0056.jpg';
 import gal1 from '@/assets/higienizacao/5f4459e2-2028-46a2-8920-66dee302caff.jpg';
+// Foto adicional do processo
+import gal2 from '@/assets/higienizacao/IMG_0057.jpg';
 
 const HigienizacaoInterna = () => {
     return (
@@ -25,7 +27,7 @@ const HigienizacaoInterna = () => {
                 "Limpeza detalhada de painéis e frestas internas.",
                 "Condicionamento de plásticos e hidratação de couro.",
             ]}
-            gallery={[heroImage, gal1]}
+            gallery={[heroImage, gal1, gal2]}
             faqs={[
                 {
                     q: "A higienização remove manchas de banco?",

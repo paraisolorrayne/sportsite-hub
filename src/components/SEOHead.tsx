@@ -19,38 +19,26 @@ const SEOHead: React.FC<SEOProps> = ({ title, description, image, article, jsonL
 
   return (
     <Helmet>
+      <html lang="pt-BR" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonical} />
-      <meta name="image" content={ogImage} /> {/* General image meta tag */}
+      <meta name="robots" content="index, follow" />
 
-      {/* Open Graph / Facebook */}
+      {/* Open Graph */}
       <meta property="og:type" content={article ? 'article' : 'website'} />
       <meta property="og:url" content={canonical} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content="Prime Detail" />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="pt_BR" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="robots" content="index, follow" />
-      <link rel="canonical" href={canonical || window.location.href} />
-
-      {/* Open Graph */}
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={siteName} />
-      {ogImage && <meta property="og:image" content={ogImage} />}
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
 
       {/* JSON-LD */}
       {jsonLd && (

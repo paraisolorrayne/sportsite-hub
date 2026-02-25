@@ -8,7 +8,7 @@ const Sobre = () => {
     <>
       <SEOHead
         title="Quem Somos – A Vitrine da Estética Automotiva em Uberlândia"
-        description="Conheça a Prime Detail. Paixão por carros e obsessão pela perfeição. O melhor centro de estética automotiva de Uberlândia."
+        description="Conheça a Prime Detail: centro de estética automotiva premium em Uberlândia com mais de 5.000 veículos transformados. Técnicos certificados em polimento, vitrificação e PPF."
       />
 
       {/* Hero */}
@@ -43,7 +43,7 @@ const Sobre = () => {
             >
               <img
                 src={igorCeo}
-                alt="Igor - CEO Prime Detail"
+                alt="Igor, fundador e CEO da Prime Detail, centro de estética automotiva em Uberlândia"
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">

@@ -62,7 +62,7 @@ const Guia = () => {
         <>
             <SEOHead
                 title="Guia: Como Cuidar do Seu Carro – Prime Detail"
-                description="Aprenda a manter o brilho e a proteção do seu carro por mais tempo. Baixe nosso E-book exclusivo de manutenção automotiva."
+                description="Baixe grátis o guia de manutenção automotiva da Prime Detail Uberlândia. Aprenda a cuidar da vitrificação, PPF e pintura do seu carro. E-book exclusivo com dicas profissionais."
             />
 
             <section className="py-20 md:py-32">
@@ -98,7 +98,7 @@ const Guia = () => {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="bg-card p-10 border border-border relative overflow-hidden"
+                            className="bg-card p-6 md:p-10 border border-border relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-8 text-primary opacity-5">
                                 <BookOpen size={120} />
@@ -120,7 +120,7 @@ const Guia = () => {
                                     </p>
 
                                     <div>
-                                        <label className="block text-xs font-condensed uppercase tracking-widest text-muted-foreground mb-2 font-bold flex items-center gap-2">
+                                        <label className="text-xs font-condensed uppercase tracking-widest text-muted-foreground mb-2 font-bold flex items-center gap-2">
                                             <Smartphone size={14} className="text-primary" /> Seu WhatsApp com DDD
                                         </label>
                                         <input
@@ -141,7 +141,7 @@ const Guia = () => {
                                     <button
                                         type="submit"
                                         data-cta="request-ebook"
-                                        className="w-full inline-flex items-center justify-center gap-3 px-8 py-5 brand-gradient text-white font-heading text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-brand shadow-lg"
+                                        className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 md:px-8 md:py-5 brand-gradient text-white font-heading text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-brand shadow-lg"
                                     >
                                         Quero Garantir Meu Guia <Download size={20} />
                                     </button>
@@ -157,18 +157,61 @@ const Guia = () => {
 
             {/* Guide Topics Highlights */}
             <section className="py-24 bg-secondary/20">
-                <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div className="text-center space-y-4">
-                        <h4 className="text-xl font-heading text-white">Lavagem Segura</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">Aprenda a não riscar seu carro durante a limpeza básica semanal com as técnicas de Detailing.</p>
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl md:text-4xl font-heading text-white text-center mb-4">
+                        O que você vai <span className="text-gradient-brand">aprender</span>
+                    </h2>
+                    <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-16">
+                        Nosso guia foi escrito pela equipe técnica da Prime Detail Uberlândia com base em anos de experiência no cuidado de veículos premium.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <div className="space-y-4">
+                            <h3 className="text-xl font-heading text-white">Lavagem Segura: Método dos Dois Baldes</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                A técnica dos dois baldes é a base de qualquer lavagem profissional. Um balde contém água com shampoo neutro automotivo e o outro apenas água limpa para enxaguar a luva de microfibra entre as passadas. Isso evita que partículas de sujeira sejam arrastadas de volta à pintura, prevenindo os famosos swirl marks (micro-riscos circulares). No guia, ensinamos o passo a passo completo, incluindo a pré-lavagem com snow foam e a secagem segura com toalha de waffle.
+                            </p>
+                        </div>
+                        <div className="space-y-4">
+                            <h3 className="text-xl font-heading text-white">Proteção Solar e Cuidados com o Calor</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                O clima de Uberlândia, com temperaturas que ultrapassam 35°C no verão, é especialmente agressivo para pinturas e interiores automotivos. No guia, explicamos como manter borrachas e plásticos condicionados para evitar ressecamento, a importância de estacionar na sombra ou usar capa protetora, e como a vitrificação cerâmica atua como barreira contra raios UV. Também abordamos como ativar a propriedade self-healing do PPF usando apenas calor solar.
+                            </p>
+                        </div>
+                        <div className="space-y-4">
+                            <h3 className="text-xl font-heading text-white">Conservação de Couro e Interior</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Bancos de couro precisam de hidratação periódica para não ressecar, trincar e perder a flexibilidade. No guia, ensinamos a frequência ideal de hidratação (a cada 3 meses), quais produtos usar e quais evitar (nunca use produtos à base de silicone em couro), e como limpar manchas sem danificar o material. Também cobrimos o cuidado com Alcantara, camurça sintética e plásticos de acabamento piano black.
+                            </p>
+                        </div>
                     </div>
-                    <div className="text-center space-y-4">
-                        <h4 className="text-xl font-heading text-white">Proteção Térmica</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">Dicas de como manter as vedações e plásticos condicionados mesmo sob o sol forte de Uberlândia.</p>
-                    </div>
-                    <div className="text-center space-y-4">
-                        <h4 className="text-xl font-heading text-white">Conservação Interna</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">O guia ensina como hidratar bancos de couro e prevenir rachaduras de forma profissional.</p>
+                </div>
+            </section>
+
+            {/* Additional Tips Section for LLMO */}
+            <section className="py-24">
+                <div className="container mx-auto px-4 max-w-3xl">
+                    <h2 className="text-3xl md:text-4xl font-heading text-white text-center mb-12">
+                        Dicas rápidas de <span className="text-gradient-brand">manutenção automotiva</span>
+                    </h2>
+                    <div className="space-y-8">
+                        <div className="p-6 bg-card border border-border">
+                            <h3 className="font-heading text-lg text-primary mb-3">Qual a frequência ideal de lavagem?</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Para veículos com vitrificação cerâmica, recomendamos lavagem a cada 7 a 14 dias, usando shampoo neutro com pH balanceado. Evite lava-rápidos com escova rotativa — eles são a principal causa de swirl marks. Se o carro tiver PPF, a lavagem pode seguir o mesmo intervalo, mas nunca use produtos à base de solvente ou removedores de cera agressivos, que podem comprometer a camada de proteção.
+                            </p>
+                        </div>
+                        <div className="p-6 bg-card border border-border">
+                            <h3 className="font-heading text-lg text-primary mb-3">Posso encerar um carro vitrificado?</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Não é necessário, pois a vitrificação cerâmica já oferece proteção superior à cera. Porém, você pode aplicar um booster de cerâmica (manutenção) a cada 4 a 6 meses para reforçar a hidrofobicidade e manter o brilho. Na Prime Detail, oferecemos esse serviço de manutenção preventiva para clientes que fizeram vitrificação conosco.
+                            </p>
+                        </div>
+                        <div className="p-6 bg-card border border-border">
+                            <h3 className="font-heading text-lg text-primary mb-3">Como remover dejetos de pássaros sem riscar?</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                Dejetos de pássaros são altamente ácidos e podem danificar o verniz se não forem removidos rapidamente. Nunca esfregue a seco — umedeça a área com água e um pano de microfibra, deixe amolecer por 30 segundos e remova com movimentos suaves. Se o carro tiver vitrificação, a camada cerâmica oferece proteção adicional contra ataques ácidos, mas mesmo assim a remoção rápida é recomendada.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>

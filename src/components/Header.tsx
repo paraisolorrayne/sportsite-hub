@@ -22,14 +22,14 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-2 group">
           <img
             src="/logo_prime.png"
-            alt="Prime Detail"
+            alt="Prime Detail – Estética Automotiva em Uberlândia"
             className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
-          <nav className="flex items-center gap-1">
+          <nav aria-label="Navegação principal" className="flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -59,7 +59,8 @@ const Header = () => {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-foreground p-2"
-          aria-label="Menu"
+          aria-label={mobileOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -69,6 +70,7 @@ const Header = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
+            aria-label="Navegação mobile"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

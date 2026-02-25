@@ -3,6 +3,9 @@ import heroImage from '@/assets/polimento/IMG_0992.jpg';
 import gal1 from '@/assets/polimento/IMG_1751.jpg';
 import gal2 from '@/assets/polimento/IMG_9439.jpg';
 import gal3 from '@/assets/polimento/IMG_9440.jpg';
+// Fotos adicionais do processo
+import gal4 from '@/assets/polimento/IMG_4500.jpg';
+import gal5 from '@/assets/polimento/b90d5502-4671-4c75-a937-c63517a3dcc9.jpg';
 
 const PolimentoTecnico = () => {
     return (
@@ -26,7 +29,7 @@ const PolimentoTecnico = () => {
                 "Fase de Corte (se necessário) para remover riscos profundos.",
                 "Fase de Refino e Lustro para acabamento impecável.",
             ]}
-            gallery={[gal1, gal2, gal3]}
+            gallery={[gal1, gal2, gal3, gal4, gal5]}
             faqs={[
                 {
                     q: "O polimento remove qualquer risco?",

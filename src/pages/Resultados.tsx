@@ -45,7 +45,7 @@ const Resultados = () => {
         <>
             <SEOHead
                 title="Resultados e Antes/Depois de Estética Automotiva"
-                description="Veja a galeria de projetos entregues pela Prime Detail em Uberlândia. Resultados reais em vitrificação, polimento e PPF."
+                description="Galeria de antes e depois da Prime Detail Uberlândia. Resultados reais de polimento técnico, vitrificação cerâmica e PPF em veículos premium. Confira as transformações."
             />
 
             <section className="py-20 md:py-32">
@@ -123,7 +123,7 @@ const Resultados = () => {
                                         >
                                             <img
                                                 src={post.media_url}
-                                                alt="Instagram post"
+                                                alt={`Resultado de estética automotiva Prime Detail Uberlândia – post ${i + 1} do Instagram @primedetaill`}
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                                             />
                                             <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -140,7 +140,7 @@ const Resultados = () => {
                                 href="https://www.instagram.com/primedetaill/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-10 py-4 brand-gradient text-white font-condensed uppercase tracking-widest hover:opacity-90 transition-opacity glow-brand text-lg"
+                                className="inline-flex items-center gap-2 px-6 py-3 md:px-10 md:py-4 brand-gradient text-white font-condensed uppercase tracking-widest hover:opacity-90 transition-opacity glow-brand text-base md:text-lg"
                             >
                                 Ver perfil completo no Instagram <ArrowRight size={20} />
                             </a>

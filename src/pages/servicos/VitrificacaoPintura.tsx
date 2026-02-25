@@ -1,6 +1,8 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
 import heroImage from '@/assets/vitrificacao/IMG_4034.jpg';
 import gal1 from '@/assets/vitrificacao/IMG_4051.jpg';
+// Foto adicional do processo
+import gal2 from '@/assets/vitrificacao/IMG_4035.jpg';
 
 const VitrificacaoPintura = () => {
     return (
@@ -25,7 +27,7 @@ const VitrificacaoPintura = () => {
                 "Aplicação controlada do vitrificador cerâmico.",
                 "Cura em ambiente controlado para máxima aderência.",
             ]}
-            gallery={[heroImage, gal1]}
+            gallery={[heroImage, gal1, gal2]}
             faqs={[
                 {
                     q: "Qual a durabilidade da vitrificação?",

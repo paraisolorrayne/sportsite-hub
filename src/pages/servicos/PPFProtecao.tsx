@@ -3,6 +3,12 @@ import heroImage from '@/assets/ppf/IMG_0212.jpg';
 import gal1 from '@/assets/ppf/IMG_1288.jpg';
 import gal2 from '@/assets/ppf/IMG_1404.jpg';
 import gal3 from '@/assets/ppf/IMG_2129.jpg';
+// Fotos adicionais do processo de aplicação
+import gal4 from '@/assets/ppf/IMG_2179.jpg';
+import gal5 from '@/assets/ppf/IMG_9886.jpg';
+import gal6 from '@/assets/ppf/6B900981-A434-4CA3-AC31-AA31773194C0.jpg';
+import gal7 from '@/assets/ppf/F061BE77-43CD-4860-B8ED-096F115E8B7F.jpg';
+import gal8 from '@/assets/ppf/FBB87441-46B3-47E3-AE3C-4EA7E58AF1FB.jpg';
 
 const PPFProtecao = () => {
     return (
@@ -27,7 +33,7 @@ const PPFProtecao = () => {
                 "Instalação com técnica húmida e acabamento invisível.",
                 "Inspeção final e selagem das bordas.",
             ]}
-            gallery={[gal1, gal2, gal3]}
+            gallery={[gal1, gal2, gal3, gal4, gal5, gal6, gal7, gal8]}
             faqs={[
                 {
                     q: "O PPF altera a cor do carro?",

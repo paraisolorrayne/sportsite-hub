@@ -14,13 +14,13 @@ const Contato = () => {
   };
 
   const whatsappNumber = "5534984033956";
-  const address = "Rua Exemplo, 123 - Bairro Estética, Uberlândia - MG";
+  const address = "Uberlândia, MG";
 
   return (
     <>
       <SEOHead
         title="Contato e Localização Uberlândia"
-        description="Entre em contato com a Prime Detail Uberlândia. Agende sua lavagem técnica, polimento ou vitrificação. Atendimento premium."
+        description="Entre em contato com a Prime Detail em Uberlândia. Agende polimento, vitrificação ou PPF via WhatsApp com resposta imediata. Atendimento premium e personalizado."
       />
 
       <section className="py-20 md:py-32">
@@ -88,7 +88,7 @@ const Contato = () => {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-card p-10 border border-border"
+              className="bg-card p-6 md:p-10 border border-border"
             >
               {sent ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
@@ -149,7 +149,7 @@ const Contato = () => {
                   <button
                     type="submit"
                     data-cta="form-contato"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-5 brand-gradient text-white font-heading text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-brand shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-4 md:px-8 md:py-5 brand-gradient text-white font-heading text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-brand shadow-lg"
                   >
                     Enviar Mensagem <Send size={18} />
                   </button>
@@ -160,9 +160,26 @@ const Contato = () => {
         </div>
       </section>
 
-      {/* Map Placeholder */}
-      <section className="h-[400px] w-full bg-secondary grayscale border-t border-border flex items-center justify-center italic text-muted-foreground">
-        [Google Maps - Prime Detail Uberlândia]
+      {/* Google Maps */}
+      <section className="border-t border-border">
+        <iframe
+          title="Prime Detail Uberlândia - Localização"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120528.45906671476!2d-48.33117975!3d-18.9186971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94a4456d16b3e0e5%3A0x3c351c57b6127e14!2sUberl%C3%A2ndia%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+          className="w-full h-[400px] grayscale border-0"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+        <div className="bg-card py-4 text-center">
+          <a
+            href="https://www.google.com/maps/search/Prime+Detail+Uberlândia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline text-sm font-condensed uppercase tracking-widest"
+          >
+            Ver no Google Maps →
+          </a>
+        </div>
       </section>
     </>
   );

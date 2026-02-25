@@ -3,6 +3,22 @@ import heroImage from '@/assets/lavada-detalhada/IMG_9176.jpg';
 import gal1 from '@/assets/lavada-detalhada/IMG_1237.jpg';
 import gal2 from '@/assets/lavada-detalhada/IMG_2154.jpg';
 import gal3 from '@/assets/lavada-detalhada/IMG_9365.jpg';
+// Fotos adicionais do processo
+import gal4 from '@/assets/lavada-detalhada/IMG_1258.jpg';
+import gal5 from '@/assets/lavada-detalhada/IMG_1428.jpg';
+import gal6 from '@/assets/lavada-detalhada/IMG_1815.jpg';
+import gal7 from '@/assets/lavada-detalhada/IMG_1816.jpg';
+import gal8 from '@/assets/lavada-detalhada/IMG_1976.jpg';
+import gal9 from '@/assets/lavada-detalhada/IMG_2082.jpg';
+import gal10 from '@/assets/lavada-detalhada/IMG_2114.jpg';
+import gal11 from '@/assets/lavada-detalhada/IMG_2162.jpg';
+import gal12 from '@/assets/lavada-detalhada/IMG_2165.jpg';
+import gal13 from '@/assets/lavada-detalhada/IMG_2249.jpg';
+import gal14 from '@/assets/lavada-detalhada/IMG_2289.jpg';
+import gal15 from '@/assets/lavada-detalhada/IMG_3963.jpg';
+import gal16 from '@/assets/lavada-detalhada/IMG_4016.jpg';
+import gal17 from '@/assets/lavada-detalhada/IMG_9489.jpg';
+import gal18 from '@/assets/lavada-detalhada/IMG_9513.jpg';
 
 const LavagemDetalhada = () => {
     return (
@@ -27,7 +43,7 @@ const LavagemDetalhada = () => {
                 "Limpeza minuciosa de frestas com pincéis específicos.",
                 "Condicionamento de plásticos e pneus com produtos premium.",
             ]}
-            gallery={[gal1, gal2, gal3]}
+            gallery={[gal1, gal2, gal3, gal4, gal5, gal6, gal7, gal8, gal9, gal10, gal11, gal12, gal13, gal14, gal15, gal16, gal17, gal18]}
             faqs={[
                 {
                     q: "Quanto tempo leva a lavagem detalhada?",
