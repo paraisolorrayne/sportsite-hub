@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/sobre', label: 'Sobre' },
+  { to: '/', label: 'Início' },
   { to: '/servicos', label: 'Serviços' },
-  { to: '/blog', label: 'Blog' },
+  { to: '/resultados', label: 'Resultados' },
+  { to: '/sobre', label: 'Sobre' },
   { to: '/contato', label: 'Contato' },
 ];
 
@@ -20,28 +20,40 @@ const Header = () => {
       <div className="container mx-auto px-4 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 racing-gradient rounded-sm rotate-45 group-hover:rotate-[55deg] transition-transform duration-300" />
-          <span className="font-heading text-xl md:text-2xl tracking-wider text-foreground">
-            SPEED<span className="text-gradient-racing">AUTO</span>
-          </span>
+          <img
+            src="/logo_prime.png"
+            alt="Prime Detail"
+            className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`px-4 py-2 font-condensed text-sm uppercase tracking-widest transition-colors duration-200 ${
-                location.pathname === link.to
+        <div className="hidden md:flex items-center gap-6">
+          <nav className="flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`px-3 py-2 font-condensed text-sm uppercase tracking-widest transition-colors duration-200 ${location.pathname === link.to
                   ? 'text-primary'
                   : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+                  }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <a
+            href="https://wa.me/5534984033956"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="header-agendar"
+            className="px-6 py-2 brand-gradient text-white font-condensed text-sm uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity glow-brand"
+          >
+            Agendar Agora
+          </a>
+        </div>
 
         {/* Mobile Toggle */}
         <button
@@ -68,15 +80,24 @@ const Header = () => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`px-6 py-3 font-condensed text-base uppercase tracking-widest ${
-                    location.pathname === link.to
-                      ? 'text-primary bg-secondary'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                  }`}
+                  className={`px-6 py-3 font-condensed text-base uppercase tracking-widest ${location.pathname === link.to
+                    ? 'text-primary bg-secondary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                    }`}
                 >
                   {link.label}
                 </Link>
               ))}
+              <div className="px-6 py-4 border-t border-border mt-2">
+                <a
+                  href="https://wa.me/5534984033956"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-full py-3 brand-gradient text-white font-condensed uppercase tracking-wider glow-brand"
+                >
+                  Falar no WhatsApp
+                </a>
+              </div>
             </div>
           </motion.nav>
         )}

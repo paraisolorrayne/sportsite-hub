@@ -4,31 +4,40 @@ const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 racing-gradient rounded-sm rotate-45" />
-              <span className="font-heading text-xl tracking-wider text-foreground">
-                SPEED<span className="text-gradient-racing">AUTO</span>
-              </span>
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center">
+              <img
+                src="/logo_prime.png"
+                alt="Prime Detail"
+                className="h-12 w-auto object-contain"
+              />
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Estética automotiva de alta performance. Cuidamos do seu carro como ele merece.
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+              Estética automotiva de alta performance em Uberlândia. Cuidamos de cada detalhe com produtos premium e técnicas avançadas.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-heading text-sm text-foreground mb-4">Navegação</h4>
-            <div className="flex flex-col gap-2">
-              {['Home', 'Sobre', 'Serviços', 'Blog', 'Contato'].map((item) => (
+            <h4 className="font-heading text-sm text-foreground mb-6">Navegação</h4>
+            <div className="grid grid-cols-2 gap-y-2 gap-x-4">
+              {[
+                { label: 'Início', to: '/' },
+                { label: 'Sobre', to: '/sobre' },
+                { label: 'Serviços', to: '/servicos' },
+                { label: 'Resultados', to: '/resultados' },
+                { label: 'Glossário', to: '/glossario' },
+                { label: 'Guia de Cuidados', to: '/guia-cuidados' },
+                { label: 'Contato', to: '/contato' }
+              ].map((item) => (
                 <Link
-                  key={item}
-                  to={item === 'Home' ? '/' : `/${item.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  key={item.label}
+                  to={item.to}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </div>
@@ -36,18 +45,22 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-heading text-sm text-foreground mb-4">Contato</h4>
-            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <span>contato@speedauto.com.br</span>
-              <span>(11) 99999-9999</span>
-              <span>São Paulo, SP</span>
+            <h4 className="font-heading text-sm text-foreground mb-6">Contato</h4>
+            <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2">Uberlândia, MG</span>
+              <a href="tel:34984033956" className="hover:text-primary transition-colors">(34) 98403-3956</a>
+              <a href="mailto:contato@primedetail.com.br" className="hover:text-primary transition-colors">contato@primedetail.com.br</a>
+              <div className="flex gap-4 mt-2">
+                <a href="https://www.instagram.com/primedetaill/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Instagram</a>
+                <a href="https://wa.me/5534984033956" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-6 text-center">
+        <div className="border-t border-border mt-12 pt-6 text-center">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} SpeedAuto. Todos os direitos reservados.
+            © {new Date().getFullYear()} Prime Detail. Uberlândia, Minas Gerais. Todos os direitos reservados.
           </p>
         </div>
       </div>

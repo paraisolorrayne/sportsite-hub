@@ -6,57 +6,55 @@
 
 @layer base {
   :root {
-    /* Automotive Dark Theme */
-    --background: 0 0% 7%;
+    /* Prime Detail - Institutional Blue Theme */
+    --background: 220 20% 6%;
     --foreground: 0 0% 95%;
 
-    --card: 0 0% 10%;
+    --card: 220 15% 10%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 10%;
+    --popover: 220 15% 10%;
     --popover-foreground: 0 0% 95%;
 
-    /* Racing Red */
-    --primary: 0 85% 50%;
+    /* Institutional Blue (Primary) */
+    --primary: 214 89% 52%;
     --primary-foreground: 0 0% 100%;
 
-    /* Carbon Grey */
-    --secondary: 0 0% 15%;
+    /* Dark Navy (Secondary) */
+    --secondary: 220 20% 12%;
     --secondary-foreground: 0 0% 90%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 10% 65%;
 
-    /* Accent - warm orange/amber */
-    --accent: 25 95% 55%;
+    /* Accent - Deep Sky Blue */
+    --accent: 200 95% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 85% 50%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 214 89% 52%;
 
-    --radius: 0.25rem;
+    --radius: 0.5rem;
 
     /* Custom tokens */
-    --surface-glass: 0 0% 100% / 0.04;
-    --surface-elevated: 0 0% 12%;
-    --racing-gradient: linear-gradient(135deg, hsl(0 85% 50%), hsl(25 95% 55%));
-    --carbon-gradient: linear-gradient(180deg, hsl(0 0% 7%), hsl(0 0% 4%));
-    --speed-line: hsl(0 85% 50% / 0.3);
-    --glow-primary: 0 0 30px hsl(0 85% 50% / 0.4);
-    --glow-accent: 0 0 30px hsl(25 95% 55% / 0.3);
+    --surface-glass: 220 20% 100% / 0.04;
+    --surface-elevated: 220 15% 12%;
+    --brand-gradient: linear-gradient(135deg, hsl(214 89% 52%), hsl(220 79% 35%));
+    --carbon-gradient: linear-gradient(180deg, hsl(220 20% 6%), hsl(220 20% 4%));
+    --brand-glow: 0 0 30px hsl(214 89% 52% / 0.3);
 
-    --sidebar-background: 0 0% 5%;
+    --sidebar-background: 220 25% 5%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 85% 50%;
+    --sidebar-primary: 214 89% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent: 220 15% 12%;
     --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 85% 50%;
+    --sidebar-border: 220 15% 15%;
+    --sidebar-ring: 214 89% 52%;
   }
 }
 
@@ -72,7 +70,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
@@ -81,16 +84,16 @@
 }
 
 @layer components {
-  .racing-gradient {
-    background: var(--racing-gradient);
+  .brand-gradient {
+    background: var(--brand-gradient);
   }
 
   .carbon-gradient {
     background: var(--carbon-gradient);
   }
 
-  .text-gradient-racing {
-    background: var(--racing-gradient);
+  .text-gradient-brand {
+    background: var(--brand-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -102,12 +105,12 @@
     border: 1px solid hsl(var(--border));
   }
 
-  .glow-primary {
-    box-shadow: var(--glow-primary);
+  .glow-brand {
+    box-shadow: var(--brand-glow);
   }
 
   .glow-accent {
-    box-shadow: var(--glow-accent);
+    box-shadow: 0 0 20px hsl(200 95% 55% / 0.2);
   }
 
   .speed-stripe {
@@ -128,8 +131,13 @@
   }
 
   @keyframes speed-shine {
-    0% { left: -100%; }
-    100% { left: 200%; }
+    0% {
+      left: -100%;
+    }
+
+    100% {
+      left: 200%;
+    }
   }
 
   .skew-section {
@@ -144,9 +152,11 @@
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: hsl(var(--background));
   }
+
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--primary));
     border-radius: 3px;

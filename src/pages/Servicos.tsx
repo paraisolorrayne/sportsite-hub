@@ -1,31 +1,239 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Droplets, PaintBucket, ShieldCheck } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Sparkles, Droplets, PaintBucket, ShieldCheck, Car, HelpCircle, ArrowRight, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
+import { claimPlayback, releasePlayback } from '@/lib/videoRegistry';
+
+// Each video section manages its own ref, state and IntersectionObserver
+const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const mountedRef = useRef(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Safe pause: waits for any pending play() promise before calling pause()
+  const safePause = (video: HTMLVideoElement) => {
+    const pending = playPromiseRef.current;
+    if (pending) {
+      pending
+        .then(() => { if (mountedRef.current && !video.paused) video.pause(); })
+        .catch(() => { /* already handled */ });
+    } else if (!video.paused) {
+      video.pause();
+    }
+  };
+
+  // Safe play: tracks the pending promise and silences AbortError
+  const safePlay = (video: HTMLVideoElement) => {
+    // Mutual exclusion: pause any other active video first
+    claimPlayback(video, () => safePause(video));
+
+    const attemptPlay = () => {
+      const promise = video.play();
+      playPromiseRef.current = promise;
+      promise
+        .then(() => {
+          playPromiseRef.current = null;
+        })
+        .catch((err) => {
+          playPromiseRef.current = null;
+          releasePlayback(video);
+          if (err.name !== 'AbortError') {
+            console.error('Playback failed:', err.name, err.message);
+          }
+        });
+    };
+
+    // Safari: if the video hasn't loaded any data, trigger load first
+    if (video.readyState === 0) {
+      video.addEventListener('canplay', () => {
+        if (mountedRef.current) attemptPlay();
+      }, { once: true });
+      video.load();
+    } else {
+      attemptPlay();
+    }
+  };
+
+  useEffect(() => {
+    mountedRef.current = true;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Safari: Warming up the media engine early helps prevent AbortError
+          if (video.readyState === 0) {
+            video.load();
+          }
+        } else {
+          safePause(video);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+    return () => {
+      mountedRef.current = false;
+      observer.disconnect();
+      safePause(video);
+      releasePlayback(video);
+    };
+  }, []);
+
+  const toggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      safePlay(video);
+    } else {
+      safePause(video);
+    }
+  };
+
+  return (
+    <div className="h-full w-full relative group cursor-pointer" onClick={toggle}>
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        preload="metadata"
+        muted
+        loop
+        playsInline
+        webkit-playsinline="true"
+        className="h-full w-full object-cover pointer-events-none"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
+        onEnded={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
+      />
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none ${isPlaying ? 'opacity-0 scale-110' : 'opacity-100 bg-black/40'
+          }`}
+      >
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md transition-transform group-hover:scale-110 active:scale-95">
+          <Play className="ml-1 h-8 w-8 text-white" fill="white" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Lavagem Detalhada
+import lavadaHero from '@/assets/lavada-detalhada/IMG_9176.jpg';
+import lavadaGal1 from '@/assets/lavada-detalhada/IMG_1237.jpg';
+import lavadaGal2 from '@/assets/lavada-detalhada/IMG_2154.jpg';
+import lavadaGal3 from '@/assets/lavada-detalhada/IMG_9365.jpg';
+// Videos served from public/ for proper HTTP range request support
+const lavadaVideo = '/videos/lavada-hero.mp4';
+const polimentoVideo = '/videos/polimento-hero.mp4';
+const vitrificacaoVideo = '/videos/vitrificacao-hero.mp4';
+const ppfVideo = '/videos/ppf-hero.mp4';
+const higienizacaoVideo = '/videos/higienizacao-hero.mp4';
+
+// Polimento
+import polimentoHero from '@/assets/polimento/IMG_0992.jpg';
+import polimentoGal1 from '@/assets/polimento/IMG_1751.jpg';
+import polimentoGal2 from '@/assets/polimento/IMG_9439.jpg';
+import polimentoGal3 from '@/assets/polimento/IMG_9440.jpg';
+
+// Vitrificação
+import vitrificacaoHero from '@/assets/vitrificacao/IMG_4034.jpg';
+import vitrificacaoGal1 from '@/assets/vitrificacao/IMG_4051.jpg';
+
+// PPF
+import ppfHero from '@/assets/ppf/IMG_0212.jpg';
+import ppfGal1 from '@/assets/ppf/IMG_1288.jpg';
+import ppfGal2 from '@/assets/ppf/IMG_1404.jpg';
+import ppfGal3 from '@/assets/ppf/IMG_2129.jpg';
+
+// Higienização
+import higienizacaoHero from '@/assets/higienizacao/IMG_0056.jpg';
+import higienizacaoGal1 from '@/assets/higienizacao/5f4459e2-2028-46a2-8920-66dee302caff.jpg';
+
+// Película (no dedicated folder)
+import peliculaHero from '@/assets/pelicula-protecao-solar/pelicula-protecao.jpeg';
 
 const services = [
   {
+    icon: Droplets,
+    title: 'Lavagem Detalhada',
+    description: 'Limpeza minuciosa com pincéis em frestas, remoção de contaminação ferrosa e proteção básica de pintura.',
+    price: 'A partir de R$ 150',
+    heroImage: lavadaHero,
+    heroVideo: lavadaVideo,
+    gallery: [lavadaGal1, lavadaGal2, lavadaGal3],
+    slug: 'lavagem-detalhada',
+  },
+  {
     icon: Sparkles,
     title: 'Polimento Técnico',
-    description: 'Remoção de riscos, hologramas e imperfeições com polimento em etapas progressivas.',
+    description: 'Remoção de riscos e hologramas, recuperando o brilho original. Essencial antes da vitrificação.',
     price: 'A partir de R$ 500',
+    heroImage: polimentoHero,
+    heroVideo: polimentoVideo,
+    gallery: [polimentoGal1, polimentoGal2, polimentoGal3],
+    slug: 'polimento-tecnico',
   },
   {
     icon: ShieldCheck,
-    title: 'Coating Cerâmico',
-    description: 'Proteção de longa duração com nanotecnologia cerâmica que repele água e sujeira.',
+    title: 'Vitrificação de Pintura',
+    description: 'Proteção cerâmica de alta dureza (9H). Repele sujeira, raios UV e dejetos de pássaros por até 3 anos.',
     price: 'A partir de R$ 1.200',
-  },
-  {
-    icon: PaintBucket,
-    title: 'PPF - Proteção de Pintura',
-    description: 'Película protetora transparente que blinda a pintura contra pedras e riscos.',
-    price: 'Sob consulta',
+    heroImage: vitrificacaoHero,
+    heroVideo: vitrificacaoVideo,
+    gallery: [vitrificacaoGal1],
+    slug: 'vitrificacao-pintura',
   },
   {
     icon: Droplets,
-    title: 'Higienização Completa',
-    description: 'Limpeza profunda interna e externa com produtos premium e técnicas profissionais.',
-    price: 'A partir de R$ 300',
+    title: 'Película de Controle Solar',
+    description: 'Redução de calor e proteção UV extrema. Melhora o conforto térmico e protege o interior contra desbotamento.',
+    price: 'A partir de R$ 400',
+    heroImage: peliculaHero,
+    heroVideo: undefined,
+    gallery: [],
+    slug: 'pelicula-controle-solar',
+  },
+  {
+    icon: PaintBucket,
+    title: 'PPF (Paint Protection Film)',
+    description: 'Película de poliuretano regenerativa. A proteção definitiva contra pedras de estrada e riscos profundos.',
+    price: 'Sob consulta',
+    heroImage: ppfHero,
+    heroVideo: ppfVideo,
+    gallery: [ppfGal1, ppfGal2, ppfGal3],
+    slug: 'ppf-protecao-pintura',
+  },
+  {
+    icon: Car,
+    title: 'Higienização Interna',
+    description: 'Limpeza profunda de bancos, carpetes e teto. Extração de ácaros e odores com proteção de plásticos/couro.',
+    price: 'A partir de R$ 350',
+    heroImage: higienizacaoHero,
+    heroVideo: higienizacaoVideo,
+    gallery: [higienizacaoGal1],
+    slug: 'higienizacao-interna',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Quanto tempo demora o serviço?',
+    a: 'Depende do serviço. Uma lavagem detalhada leva em média 4 a 6 horas. Vitrificação e Polimento podem exigir de 2 a 3 dias úteis.',
+  },
+  {
+    q: 'Preciso agendar com antecedência?',
+    a: 'Sim, trabalhamos com agendamento prévio para garantir a atenção dedicada que seu veículo merece. Recomendamos 3-5 dias de antecedência.',
+  },
+  {
+    q: 'Vocês dão garantia?',
+    a: 'Sim! Todos os nossos serviços de proteção (Vitrificação e PPF) acompanham certificado de garantia e guia de manutenção.',
   },
 ];
 
@@ -33,8 +241,8 @@ const Servicos = () => {
   return (
     <>
       <SEOHead
-        title="Serviços"
-        description="Conheça nossos serviços de estética automotiva: polimento, coating cerâmico, PPF e higienização completa."
+        title="Serviços de Estética Automotiva Premium em Uberlândia"
+        description="Conheça nossos serviços: Polimento Técnico, Vitrificação 9H, PPF, Higienização Interna e Lavagem Detalhada. Excelência em Uberlândia."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'ItemList',
@@ -47,40 +255,112 @@ const Servicos = () => {
         }}
       />
 
-      <section className="py-20 md:py-32">
+      {/* Page Header */}
+      <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
           >
-            <div className="h-1 w-16 racing-gradient mb-6" />
-            <h1 className="text-4xl md:text-6xl font-heading mb-4">
-              Nossos <span className="text-gradient-racing">Serviços</span>
+            <div className="h-1 w-16 brand-gradient mb-6" />
+            <h1 className="text-4xl md:text-6xl font-heading mb-4 text-white">
+              Nossos <span className="text-gradient-brand">Serviços</span>
             </h1>
             <p className="text-muted-foreground max-w-lg">
-              Soluções completas para proteger e valorizar seu veículo.
+              Soluções avançadas para proteger, renovar e valorizar seu patrimônio em Uberlândia.
             </p>
           </motion.div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, i) => (
-              <motion.article
-                key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 bg-card border border-border hover:border-primary/40 transition-all group"
+      {/* Service Sections */}
+      {services.map((service, i) => {
+        const isReversed = i % 2 !== 0;
+        return (
+          <section key={service.title} className="border-t border-border/30 py-16 md:py-24">
+            <div className="container mx-auto px-4">
+              <div
+                className={`grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center ${isReversed ? 'md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1' : ''
+                  }`}
               >
-                <service.icon className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                <h2 className="text-2xl font-heading mb-3">{service.title}</h2>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{service.description}</p>
-                <span className="font-condensed text-sm text-accent uppercase tracking-wider">
-                  {service.price}
-                </span>
-              </motion.article>
-            ))}
+                {/* Media Block */}
+                <motion.div
+                  initial={{ opacity: 0, x: isReversed ? 50 : -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                  className="relative aspect-video overflow-hidden bg-black"
+                >
+                  {service.heroVideo ? (
+                    <ServiceMedia src={service.heroVideo} poster={service.heroImage} />
+                  ) : (
+                    <img
+                      src={service.heroImage}
+                      alt={service.title}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                </motion.div>
+
+                {/* Text Block */}
+                <motion.div
+                  initial={{ opacity: 0, x: isReversed ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                  className="py-4 md:py-0"
+                >
+                  <div className="h-0.5 w-10 brand-gradient mb-6" />
+                  <service.icon className="mb-4 h-10 w-10 text-primary" />
+                  <h2 className="mb-4 font-heading text-3xl text-white md:text-4xl">
+                    {service.title}
+                  </h2>
+                  <p className="mb-6 leading-relaxed text-muted-foreground">
+                    {service.description}
+                  </p>
+                  <p className="mb-8 font-condensed text-sm font-bold uppercase tracking-wider text-accent">
+                    {service.price}
+                  </p>
+                  <a
+                    href={`https://wa.me/5534984033956?text=Gostaria de saber mais sobre ${encodeURIComponent(service.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 brand-gradient px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+                  >
+                    Consultar Orçamento <ArrowRight size={14} />
+                  </a>
+
+                  <Link
+                    to={`/servicos/${service.slug}`}
+                    className="ml-4 inline-flex items-center gap-2 border border-white/20 px-6 py-3 font-condensed text-sm uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+                  >
+                    Ver Detalhes <ArrowRight size={14} />
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* FAQ Section */}
+      <section className="py-24 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="mb-12 text-center font-heading text-3xl text-white md:text-4xl">
+              Perguntas <span className="text-gradient-brand">Frequentes</span>
+            </h2>
+            <div className="space-y-6">
+              {faqs.map((faq, i) => (
+                <div key={i} className="border border-border bg-card p-6">
+                  <h3 className="mb-3 flex items-center gap-2 font-heading text-lg text-primary">
+                    <HelpCircle size={18} /> {faq.q}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
