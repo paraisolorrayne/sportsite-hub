@@ -1,14 +1,32 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import heroImage from '@/assets/ppf/IMG_0212.jpg';
-import gal1 from '@/assets/ppf/IMG_1288.jpg';
-import gal2 from '@/assets/ppf/IMG_1404.jpg';
-import gal3 from '@/assets/ppf/IMG_2129.jpg';
-// Fotos adicionais do processo de aplicação
-import gal4 from '@/assets/ppf/IMG_2179.jpg';
-import gal5 from '@/assets/ppf/IMG_9886.jpg';
-import gal6 from '@/assets/ppf/6B900981-A434-4CA3-AC31-AA31773194C0.jpg';
-import gal7 from '@/assets/ppf/F061BE77-43CD-4860-B8ED-096F115E8B7F.jpg';
-import gal8 from '@/assets/ppf/FBB87441-46B3-47E3-AE3C-4EA7E58AF1FB.jpg';
+import { GalleryGroup } from '@/components/ServicePageLayout';
+import { getServiceImages } from '@/lib/getServiceImages';
+
+const { hero, all } = getServiceImages('ppf');
+
+// Imagens (ordem alfabética):
+// 0: F061BE77 — BMW azul resultado final (hero)
+// 1: FBB87441 — Porsche azul capô com PPF sendo aplicado (parcial)
+// 2: IMG_0212 — Técnico aplicando PPF na lateral de carro branco
+// 3: IMG_1288 — Porsche azul vista de cima com PPF no capô
+// 4: IMG_1404 — Porsche azul lateral resultado completo
+// 5: IMG_2129 — Técnico aplicando PPF no capô da BMW azul
+// 6: IMG_2179 — BMW azul resultado final vista de cima
+
+const galleryGroups: GalleryGroup[] = [
+    {
+        title: 'Aplicação Peça a Peça — Porsche 718',
+        type: 'process',
+        images: [all[1], all[3], all[4]],
+        labels: ['Aplicação no Capô', 'Inspeção e Acabamento', 'Resultado Final'],
+    },
+    {
+        title: 'Aplicação Peça a Peça — BMW M340i',
+        type: 'process',
+        images: [all[5], all[6]],
+        labels: ['Instalação no Capô', 'Resultado Final'],
+    },
+];
 
 const PPFProtecao = () => {
     return (
@@ -18,7 +36,7 @@ const PPFProtecao = () => {
             description={`O PPF (Paint Protection Film) é a tecnologia mais avançada do mundo para proteção de superfícies automotivas. 
       Trata-se de uma película de poliuretano termoplástico transparente e extremamente resistente, aplicada sobre a pintura original. 
       Sua principal característica é a propriedade regenerativa (Healing): riscos superficiais desaparecem com a exposição ao calor, mantendo o carro sempre novo.`}
-            heroImage={heroImage}
+            heroImage={hero}
             heroVideo="/videos/ppf-hero.mp4"
             pricing="Sob consulta"
             benefits={[
@@ -33,7 +51,7 @@ const PPFProtecao = () => {
                 "Instalação com técnica húmida e acabamento invisível.",
                 "Inspeção final e selagem das bordas.",
             ]}
-            gallery={[gal1, gal2, gal3, gal4, gal5, gal6, gal7, gal8]}
+            galleryGroups={galleryGroups}
             faqs={[
                 {
                     q: "O PPF altera a cor do carro?",

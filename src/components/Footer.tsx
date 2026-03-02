@@ -28,6 +28,7 @@ const Footer = () => {
                 { label: 'Sobre', to: '/sobre' },
                 { label: 'Serviços', to: '/servicos' },
                 { label: 'Resultados', to: '/resultados' },
+                { label: 'FAQ', to: '/faq' },
                 { label: 'Glossário', to: '/glossario' },
                 { label: 'Guia de Cuidados', to: '/guia-cuidados' },
                 { label: 'Contato', to: '/contato' }

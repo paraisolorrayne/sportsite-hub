@@ -1,8 +1,23 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import heroImage from '@/assets/vitrificacao/IMG_4034.jpg';
-import gal1 from '@/assets/vitrificacao/IMG_4051.jpg';
-// Foto adicional do processo
-import gal2 from '@/assets/vitrificacao/IMG_4035.jpg';
+import { GalleryGroup } from '@/components/ServicePageLayout';
+import { getServiceImages } from '@/lib/getServiceImages';
+
+const { hero, all } = getServiceImages('vitrificacao');
+
+// Imagens (ordem alfabética):
+// 0: IMG_4034 — Chery Tiggo cinza resultado frontal
+// 1: IMG_4051 — Chery Tiggo cinza resultado traseira/lateral
+// Ambas são fotos de resultado do mesmo carro em ângulos diferentes.
+// NÃO são antes/depois.
+
+const galleryGroups: GalleryGroup[] = [
+    {
+        title: 'Resultado — Chery Tiggo 8 Pro',
+        type: 'process',
+        images: [all[0], all[1]],
+        labels: ['Frente', 'Traseira'],
+    },
+];
 
 const VitrificacaoPintura = () => {
     return (
@@ -12,7 +27,7 @@ const VitrificacaoPintura = () => {
             description={`A Vitrificação de Pintura da Prime Detail utiliza revestimentos cerâmicos de última geração (Ceramic Coating) que criam uma camada de vidro sobre o verniz. 
       Esta proteção oferece dureza extrema (9H), protegendo contra raios UV, fezes de pássaros, seiva de árvores e intempéries. 
       Além disso, proporciona uma autolimpeza incrível devido ao seu alto poder hidrofóbico (repele água e sujeira).`}
-            heroImage={heroImage}
+            heroImage={hero}
             heroVideo="/videos/vitrificacao-hero.mp4"
             pricing="A partir de R$ 1.200"
             benefits={[
@@ -27,7 +42,7 @@ const VitrificacaoPintura = () => {
                 "Aplicação controlada do vitrificador cerâmico.",
                 "Cura em ambiente controlado para máxima aderência.",
             ]}
-            gallery={[heroImage, gal1, gal2]}
+            galleryGroups={galleryGroups}
             faqs={[
                 {
                     q: "Qual a durabilidade da vitrificação?",

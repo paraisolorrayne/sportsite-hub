@@ -1,45 +1,206 @@
-import { motion } from 'framer-motion';
-import { Camera, Instagram, ArrowRight, Loader2 } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, Sparkles } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { getServiceImages } from '@/lib/getServiceImages';
 
-// Configuração do Feed Dinâmico
-// Para ativar, basta criar um feed gratuito em Behold.so e substituir a URL abaixo.
-const INSTAGRAM_FEED_URL = '';
+/* ─── Dados de todos os antes/depois organizados por serviço ─── */
+const lavagem = getServiceImages('lavada-detalhada');
+const polimento = getServiceImages('polimento');
+const higienizacao = getServiceImages('higienizacao');
 
-const gallery = [
-    { id: 1, title: 'Vitrificação BMW M3', type: '9H Coating' },
-    { id: 2, title: 'Polimento Técnico Porsche', type: 'Correção Paint' },
-    { id: 3, title: 'PPF Frontal Audi RS6', type: 'Proteção Definitiva' },
-    { id: 4, title: 'Higienização Hilux', type: 'Detalhamento Interno' },
-    { id: 5, title: 'Lavagem Motor Mercedes', type: 'Limpeza Técnica' },
-    { id: 6, title: 'Tratamento Couro Land Rover', type: 'Interior Premium' },
+interface BeforeAfterEntry {
+    before: string;
+    after: string;
+    service: string;
+    label: string;
+    serviceColor: string;
+}
+
+const allBeforeAfter: BeforeAfterEntry[] = [
+    // Lavagem Detalhada
+    {
+        before: lavagem.all[14],   // Fiat Toro suja
+        after: lavagem.all[15],    // Fiat Toro limpa
+        service: 'Lavagem Detalhada',
+        label: 'Fiat Toro — Exterior Completo',
+        serviceColor: 'from-blue-500 to-cyan-400',
+    },
+    {
+        before: lavagem.all[0],    // VW Amarok motor sujo
+        after: lavagem.all[1],     // VW Amarok motor limpo
+        service: 'Lavagem Detalhada',
+        label: 'VW Amarok — Motor',
+        serviceColor: 'from-blue-500 to-cyan-400',
+    },
+    {
+        before: lavagem.all[12],   // Chevrolet S10 motor sujo
+        after: lavagem.all[13],    // Chevrolet S10 motor limpo
+        service: 'Lavagem Detalhada',
+        label: 'Chevrolet S10 — Motor',
+        serviceColor: 'from-blue-500 to-cyan-400',
+    },
+    // Higienização Interna
+    {
+        before: higienizacao.all[1],  // Banco caramelo sujo
+        after: higienizacao.all[3],   // Banco branco limpo
+        service: 'Higienização Interna',
+        label: 'Banco de Couro',
+        serviceColor: 'from-emerald-500 to-teal-400',
+    },
 ];
 
-const fetchInstagramPosts = async () => {
-    if (!INSTAGRAM_FEED_URL) {
-        // Fallback: Retorna os posts capturados anteriormente se não houver URL configurada
-        return [
-            { id: '1', media_url: 'https://instagram.fudi1-1.fna.fbcdn.net/v/t51.2885-15/618460536_1644998206878771_3241314485757294123_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=dQd1NWEignYQ7kNvwEhuy_v&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aft9ZltUmbIVzosa8yCbBPr2yJevZDKpNPtI1SvqOT7K5g&oe=699FEBFC&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DTp4HxXFbtg/' },
-            { id: '2', media_url: 'https://instagram.fudi1-2.fna.fbcdn.net/v/t51.2885-15/574345316_841359685010663_7166472194588943748_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-2.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=WkYTRuIaA-YQ7kNvwFLdUvi&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsKrOUpW_XhPrs_iVIIys5ZbbgyANIMbz4Frm4Is9GvkQ&oe=69A01051&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DQu3XonDsuq/' },
-            { id: '3', media_url: 'https://instagram.fudi1-2.fna.fbcdn.net/v/t51.2885-15/551011158_1358910275594298_5212488467712389286_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-2.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=zjtyzsYUZOQQ7kNvwFD8K65&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu46JDbQgQeXP46fUqRb0ZIT_qqa6mYxI-skjlIsZ5HPA&oe=699FFDB2&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DO37TdVDgvk/' },
-            { id: '4', media_url: 'https://instagram.fudi1-2.fna.fbcdn.net/v/t51.2885-15/640295887_26686728784252542_7518753687072931180_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-2.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=rskwHDRXxI8Q7kNvwFO7-vu&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuOIKqxxj3VpfU04YEa0P1U4lTC75H3VQqY0m1wiptCYQ&oe=699FFED2&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DVBd2PACkgn/' },
-            { id: '5', media_url: 'https://instagram.fudi1-2.fna.fbcdn.net/v/t51.2885-15/632254989_1931320334438515_2906219591655922583_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=9YFUFu2lXokQ7kNvwFO8SGH&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuJb2x4jbWHhbRxNkvq0a9t8FOQtmFSZmLiZ8ry-PqhMg&oe=699FF6CB&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DU1T41wClVN/' },
-            { id: '6', media_url: 'https://instagram.fudi1-2.fna.fbcdn.net/v/t51.2885-15/629238709_1587553215821322_8341038357272890613_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fudi1-2.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QGQuCH4Qre3v-80CGc_uybHQlEqhw6xItJPkUf2j50RMnWqkK3ctqztaHEMZ8inVia2-rE15Af0ejSlaiEkffcu&_nc_ohc=yAdWhvGm7XkQ7kNvwFT53C-&_nc_gid=3kjwDszswTvDUtZAc1tUMg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuzXjVqofAN3UU2HE_EWhVNMkRFMF9vn_iltpb3fWJM3A&oe=69A004F8&_nc_sid=8b3546', permalink: 'https://www.instagram.com/primedetaill/reel/DUtl82TFdk_/' },
-        ];
-    }
-    const response = await fetch(INSTAGRAM_FEED_URL);
-    if (!response.ok) throw new Error('Falha ao buscar feed do Instagram');
-    const data = await response.json();
-    return data.slice(0, 6);
+/* ─── Lightbox ─── */
+const ImageLightbox = ({ src, label, onClose }: { src: string; label: string; onClose: () => void }) => {
+    useEffect(() => {
+        const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('keydown', handleKey);
+        return () => {
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', handleKey);
+        };
+    }, [onClose]);
+
+    return (
+        <AnimatePresence>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md"
+                onClick={onClose}
+            >
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 z-[110] p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+                    aria-label="Fechar"
+                >
+                    <X className="w-6 h-6" />
+                </button>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <img
+                        src={src}
+                        alt={label}
+                        className="max-w-full max-h-[80vh] object-contain rounded-sm shadow-2xl"
+                    />
+                    <p className="mt-3 text-white/70 text-sm font-condensed uppercase tracking-wider">
+                        {label}
+                    </p>
+                </motion.div>
+            </motion.div>
+        </AnimatePresence>
+    );
 };
 
+/* ─── Before/After Slider Individual ─── */
+const BeforeAfterSlider = ({ entry }: { entry: BeforeAfterEntry }) => {
+    const [position, setPosition] = useState(50);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
+    const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
+
+    const handleMove = useCallback((clientX: number) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+        setPosition((x / rect.width) * 100);
+    }, []);
+
+    useEffect(() => {
+        const onUp = () => { isDragging.current = false; };
+        const onMove = (e: MouseEvent) => { if (isDragging.current) handleMove(e.clientX); };
+        const onTouchMove = (e: TouchEvent) => { if (isDragging.current) handleMove(e.touches[0].clientX); };
+        window.addEventListener('mouseup', onUp);
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchend', onUp);
+        window.addEventListener('touchmove', onTouchMove);
+        return () => {
+            window.removeEventListener('mouseup', onUp);
+            window.removeEventListener('mousemove', onMove);
+            window.removeEventListener('touchend', onUp);
+            window.removeEventListener('touchmove', onTouchMove);
+        };
+    }, [handleMove]);
+
+    return (
+        <>
+            <div
+                ref={containerRef}
+                className="relative aspect-[3/2] w-full overflow-hidden rounded-sm cursor-col-resize select-none border border-border/50"
+                onMouseDown={(e) => { isDragging.current = true; handleMove(e.clientX); }}
+                onTouchStart={(e) => { isDragging.current = true; handleMove(e.touches[0].clientX); }}
+            >
+                {/* After (fundo) */}
+                <img src={entry.after} alt="Depois" className="absolute inset-0 w-full h-full object-cover" />
+                {/* Before (clip) */}
+                <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+                    <img src={entry.before} alt="Antes" className="w-full h-full object-cover" />
+                </div>
+                {/* Divider */}
+                <div className="absolute top-0 bottom-0 z-10" style={{ left: `${position}%`, transform: 'translateX(-50%)' }}>
+                    <div className="h-full w-0.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+                    <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                        <ChevronLeft className="w-4 h-4 text-black -mr-1" />
+                        <ChevronRight className="w-4 h-4 text-black -ml-1" />
+                    </div>
+                </div>
+                {/* Labels */}
+                <div className="absolute top-3 left-3 z-20 px-3 py-1 bg-black/70 backdrop-blur-sm text-white text-xs font-condensed uppercase tracking-widest rounded-sm">
+                    Antes
+                </div>
+                <div className="absolute top-3 right-3 z-20 px-3 py-1 bg-primary/90 backdrop-blur-sm text-white text-xs font-condensed uppercase tracking-widest rounded-sm">
+                    Depois
+                </div>
+                {/* Zoom buttons */}
+                <button
+                    onClick={(e) => { e.stopPropagation(); setLightbox({ src: entry.before, label: `${entry.label} — Antes` }); }}
+                    className="absolute bottom-3 left-3 z-20 p-2 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors"
+                    aria-label="Ampliar antes"
+                >
+                    <ZoomIn className="w-4 h-4" />
+                </button>
+                <button
+                    onClick={(e) => { e.stopPropagation(); setLightbox({ src: entry.after, label: `${entry.label} — Depois` }); }}
+                    className="absolute bottom-3 right-3 z-20 p-2 rounded-full bg-primary/70 hover:bg-primary/90 text-white transition-colors"
+                    aria-label="Ampliar depois"
+                >
+                    <ZoomIn className="w-4 h-4" />
+                </button>
+            </div>
+
+            {lightbox && (
+                <ImageLightbox
+                    src={lightbox.src}
+                    label={lightbox.label}
+                    onClose={() => setLightbox(null)}
+                />
+            )}
+        </>
+    );
+};
+
+/* ─── Filter Tabs ─── */
+const serviceFilters = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Lavagem Detalhada', value: 'Lavagem Detalhada' },
+    { label: 'Polimento Técnico', value: 'Polimento Técnico' },
+    { label: 'Higienização Interna', value: 'Higienização Interna' },
+];
+
+/* ─── Main Component ─── */
 const Resultados = () => {
-    const { data: posts, isLoading, isError } = useQuery({
-        queryKey: ['instagram-posts'],
-        queryFn: fetchInstagramPosts,
-        staleTime: 1000 * 60 * 30, // 30 minutos de cache
-    });
+    const [activeFilter, setActiveFilter] = useState('all');
+
+    const filteredEntries = activeFilter === 'all'
+        ? allBeforeAfter
+        : allBeforeAfter.filter((e) => e.service === activeFilter);
 
     return (
         <>
@@ -50,6 +211,7 @@ const Resultados = () => {
 
             <section className="py-20 md:py-32">
                 <div className="container mx-auto px-4">
+                    {/* Header */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -57,95 +219,102 @@ const Resultados = () => {
                     >
                         <div className="h-1 w-16 brand-gradient mb-6 mx-auto" />
                         <h1 className="text-4xl md:text-6xl font-heading mb-4 text-white">
-                            Nossos <span className="text-gradient-brand">Resultados</span>
+                            Antes & <span className="text-gradient-brand">Depois</span>
                         </h1>
                         <p className="text-muted-foreground">
-                            Acompanhe a transformação de veículos que passaram pelo nosso centro técnico em Uberlândia.
-                            Qualidade que você pode ver em cada detalhe.
+                            Resultados reais de cada serviço. Arraste para comparar o antes e depois
+                            das transformações realizadas no nosso centro técnico em Uberlândia.
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {gallery.map((item, i) => (
-                            <motion.div
-                                key={item.id}
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="group relative aspect-square bg-secondary/50 border border-border overflow-hidden"
+                    {/* Filters */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.15 }}
+                        className="flex flex-wrap justify-center gap-3 mb-14"
+                    >
+                        {serviceFilters.map((filter) => (
+                            <button
+                                key={filter.value}
+                                onClick={() => setActiveFilter(filter.value)}
+                                className={`px-5 py-2.5 font-condensed text-sm uppercase tracking-widest transition-all duration-300 border rounded-sm ${activeFilter === filter.value
+                                        ? 'bg-primary text-white border-primary shadow-lg shadow-primary/25'
+                                        : 'bg-transparent text-muted-foreground border-border/50 hover:border-primary/50 hover:text-white'
+                                    }`}
                             >
-                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/20 italic text-sm">
-                                    [Imagem do Projeto: {item.title}]
-                                </div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8">
-                                    <span className="text-xs font-condensed uppercase tracking-widest text-primary mb-1 font-bold">
-                                        {item.type}
-                                    </span>
-                                    <h3 className="text-xl font-heading text-white">{item.title}</h3>
-                                </div>
-                            </motion.div>
+                                {filter.label}
+                            </button>
                         ))}
+                    </motion.div>
+
+                    {/* Grid de Comparações */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                        <AnimatePresence mode="popLayout">
+                            {filteredEntries.map((entry, i) => (
+                                <motion.div
+                                    key={`${entry.service}-${entry.label}`}
+                                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                                    transition={{ delay: i * 0.1, duration: 0.4 }}
+                                    layout
+                                >
+                                    {/* Card header */}
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${entry.serviceColor} flex items-center justify-center`}>
+                                            <Sparkles className="w-4 h-4 text-white" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-condensed uppercase tracking-[0.2em] text-primary">
+                                                {entry.service}
+                                            </p>
+                                            <h3 className="text-white font-heading text-lg leading-tight">
+                                                {entry.label}
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    {/* Slider */}
+                                    <BeforeAfterSlider entry={entry} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     </div>
 
-                    <div className="mt-24 space-y-12">
-                        <div className="text-center space-y-4">
-                            <Instagram className="w-12 h-12 text-primary mx-auto" />
-                            <h2 className="text-3xl md:text-4xl font-heading text-white uppercase tracking-wider">Siga nosso Instagram</h2>
-                            <p className="text-muted-foreground max-w-lg mx-auto">
-                                Transformações reais em tempo real. Veja os detalhes de cada projeto em nosso feed oficial.
+                    {/* Empty state */}
+                    {filteredEntries.length === 0 && (
+                        <div className="text-center py-20">
+                            <p className="text-muted-foreground italic">
+                                Nenhum resultado encontrado para este filtro.
                             </p>
                         </div>
+                    )}
 
-                        <div className="max-w-5xl mx-auto">
-                            {isLoading ? (
-                                <div className="flex flex-col items-center justify-center py-20 animate-pulse">
-                                    <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
-                                    <p className="text-muted-foreground font-condensed uppercase tracking-widest text-sm text-center">Sincronizando Feed...</p>
-                                </div>
-                            ) : isError ? (
-                                <div className="text-center py-10 border border-destructive/20 bg-destructive/5 rounded-sm">
-                                    <p className="text-destructive text-sm italic">Não foi possível carregar o feed dinâmico agora.</p>
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {posts?.map((post: any, i: number) => (
-                                        <motion.a
-                                            key={post.id}
-                                            href={post.permalink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: i * 0.05 }}
-                                            className="group relative aspect-square bg-secondary overflow-hidden border border-border/50"
-                                        >
-                                            <img
-                                                src={post.media_url}
-                                                alt={`Resultado de estética automotiva Prime Detail Uberlândia – post ${i + 1} do Instagram @primedetaill`}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-                                            />
-                                            <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                <Instagram className="text-white w-8 h-8" />
-                                            </div>
-                                        </motion.a>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="text-center pt-8">
+                    {/* CTA */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="text-center mt-20 max-w-xl mx-auto"
+                    >
+                        <div className="border border-border/50 bg-card/50 backdrop-blur-sm p-8 md:p-12 rounded-sm">
+                            <h2 className="text-2xl md:text-3xl font-heading text-white mb-4">
+                                Quer seu veículo <span className="text-gradient-brand">assim?</span>
+                            </h2>
+                            <p className="text-muted-foreground mb-8">
+                                Agende agora e veja a diferença com seus próprios olhos. Atendimento exclusivo e personalizado.
+                            </p>
                             <a
-                                href="https://www.instagram.com/primedetaill/"
+                                href="https://wa.me/5534992537704?text=Olá! Vi os resultados no site e gostaria de agendar um serviço."
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 md:px-10 md:py-4 brand-gradient text-white font-condensed uppercase tracking-widest hover:opacity-90 transition-opacity glow-brand text-base md:text-lg"
+                                className="inline-flex items-center gap-2 px-8 py-4 brand-gradient text-white font-condensed uppercase tracking-widest hover:opacity-90 transition-opacity glow-brand text-base"
                             >
-                                Ver perfil completo no Instagram <ArrowRight size={20} />
+                                Agendar meu serviço
                             </a>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         </>

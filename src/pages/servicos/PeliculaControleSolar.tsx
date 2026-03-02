@@ -1,5 +1,7 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import heroImage from '@/assets/pelicula-protecao-solar/pelicula-protecao.jpeg';
+import { getServiceImages } from '@/lib/getServiceImages';
+
+const { hero, gallery } = getServiceImages('pelicula-protecao-solar');
 
 const PeliculaControleSolar = () => {
     return (
@@ -9,7 +11,8 @@ const PeliculaControleSolar = () => {
             description={`Na Prime Detail, oferecemos películas de controle solar de alta performance que vão muito além da estética. 
       Nossas películas de Cerâmica reduzem drasticamente a entrada de calor no habitáculo, melhorando a eficiência do ar-condicionado e protegendo o interior contra o desbotamento causado pelo sol de Uberlândia.
       Com alta transparência ótica e rejeição de infravermelho, garantimos estilo com máxima proteção.`}
-            heroImage={heroImage}
+            heroImage={hero}
+            gallery={gallery}
             pricing="A partir de R$ 400"
             benefits={[
                 "Redução de até 80% do calor interno.",

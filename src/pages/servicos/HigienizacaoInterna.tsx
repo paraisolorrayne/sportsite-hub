@@ -1,8 +1,35 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import heroImage from '@/assets/higienizacao/IMG_0056.jpg';
-import gal1 from '@/assets/higienizacao/5f4459e2-2028-46a2-8920-66dee302caff.jpg';
-// Foto adicional do processo
-import gal2 from '@/assets/higienizacao/IMG_0057.jpg';
+import { GalleryGroup } from '@/components/ServicePageLayout';
+import { getServiceImages } from '@/lib/getServiceImages';
+
+const { hero, all } = getServiceImages('higienizacao');
+
+// Imagens (ordem alfabética):
+// 0: 5f4459e2 — Banco couro preto sujo  (hero)
+// 1: IMG_0056 — Banco caramelo sujo
+// 2: IMG_5586 — Banco preto com labels "Sujo" / "Limpo" lado a lado
+// 3: IMG_5587 — Braço banco branco/bege limpo
+// 4: IMG_5588 — Vedação borracha antes/depois (composição vertical)
+// 5: IMG_5589 — Coluna cinto de segurança antes/depois (composição lado a lado)
+// 6: IMG_5591 — Batente porta antes/depois com labels "Antes"/"Depois"
+
+// As imagens 2, 4, 5 e 6 já são composições antes/depois em uma única foto.
+// IMG_0056 (1) → IMG_5587 (3) = banco sujo → banco limpo (mesmo estilo de enquadramento)
+
+const galleryGroups: GalleryGroup[] = [
+    {
+        title: 'Antes e Depois — Banco de Couro',
+        type: 'before-after',
+        images: [all[1], all[3]],
+        // Banco caramelo sujo → Banco branco limpo
+    },
+    {
+        title: 'Detalhes do Processo',
+        type: 'process',
+        images: [all[2], all[5], all[6]],
+        labels: ['Banco — Sujo vs Limpo', 'Coluna do Cinto', 'Batente da Porta'],
+    },
+];
 
 const HigienizacaoInterna = () => {
     return (
@@ -12,7 +39,7 @@ const HigienizacaoInterna = () => {
             description={`A Higienização Interna da Prime Detail remove sujeiras invisíveis, ácaros, fungos e bactérias que se acumulam nos tecidos e carpetes. 
       Utilizamos extratoras profissionais e produtos bactericidas de última geração que não agridem as fibras dos tecidos nem ressecam o couro. 
       Deixe o interior do seu veículo com aspecto e aroma de novo.`}
-            heroImage={heroImage}
+            heroImage={hero}
             heroVideo="/videos/higienizacao-hero.mp4"
             pricing="A partir de R$ 350"
             benefits={[
@@ -27,7 +54,7 @@ const HigienizacaoInterna = () => {
                 "Limpeza detalhada de painéis e frestas internas.",
                 "Condicionamento de plásticos e hidratação de couro.",
             ]}
-            gallery={[heroImage, gal1, gal2]}
+            galleryGroups={galleryGroups}
             faqs={[
                 {
                     q: "A higienização remove manchas de banco?",

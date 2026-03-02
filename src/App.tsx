@@ -13,6 +13,7 @@ import Blog from "./pages/Blog";
 import Contato from "./pages/Contato";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
 // Service Detail Pages
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/glossario" element={<Glossario />} />
             <Route path="/guia-cuidados" element={<Guia />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/contato" element={<Contato />} />
             <Route path="/login" element={<Login />} />
             <Route

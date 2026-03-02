@@ -1,11 +1,23 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import heroImage from '@/assets/polimento/IMG_0992.jpg';
-import gal1 from '@/assets/polimento/IMG_1751.jpg';
-import gal2 from '@/assets/polimento/IMG_9439.jpg';
-import gal3 from '@/assets/polimento/IMG_9440.jpg';
-// Fotos adicionais do processo
-import gal4 from '@/assets/polimento/IMG_4500.jpg';
-import gal5 from '@/assets/polimento/b90d5502-4671-4c75-a937-c63517a3dcc9.jpg';
+import { GalleryGroup } from '@/components/ServicePageLayout';
+import { getServiceImages } from '@/lib/getServiceImages';
+
+const { hero, all } = getServiceImages('polimento');
+
+// Imagens (ordem alfabética):
+// 0: IMG_0992 — Capô preto metade polido / metade sem polir (hero — demonstração 50/50)
+// 1: IMG_4500 — Hyundai preto capô polido resultado
+// 2: IMG_9439 — Audi R8 vermelho sendo polido com produtos
+// 3: b90d5502 — Honda Civic preto resultado final
+
+const galleryGroups: GalleryGroup[] = [
+    {
+        title: 'Processo de Polimento',
+        type: 'process',
+        images: [all[0], all[2], all[1], all[3]],
+        labels: ['Avaliação 50/50', 'Correção com Politriz', 'Capô Corrigido', 'Resultado Final'],
+    },
+];
 
 const PolimentoTecnico = () => {
     return (
@@ -14,7 +26,7 @@ const PolimentoTecnico = () => {
             subtitle="Recupere o brilho de carro zero e elimine imperfeições da pintura em Uberlândia."
             description={`O Polimento Técnico da Prime Detail não é apenas um "lustro". É um processo de correção de verniz que remove riscos superficiais (swirl marks), manchas de chuva ácida, oxidação e hologramas causados por polimentos mal executados.
       Utilizamos máquinas de última geração (Roto-orbitais) e compostos polidores de alta tecnologia que preservam a espessura do verniz enquanto devolvem a profundidade e o reflexo máximo da cor.`}
-            heroImage={heroImage}
+            heroImage={hero}
             heroVideo="/videos/polimento-hero.mp4"
             pricing="A partir de R$ 500"
             benefits={[
@@ -29,7 +41,7 @@ const PolimentoTecnico = () => {
                 "Fase de Corte (se necessário) para remover riscos profundos.",
                 "Fase de Refino e Lustro para acabamento impecável.",
             ]}
-            gallery={[gal1, gal2, gal3, gal4, gal5]}
+            galleryGroups={galleryGroups}
             faqs={[
                 {
                     q: "O polimento remove qualquer risco?",
