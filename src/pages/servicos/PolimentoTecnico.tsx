@@ -18,10 +18,10 @@ const { hero, all } = getServiceImages('polimento');
 
 const galleryGroups: GalleryGroup[] = [
     {
-        title: 'Processo de Polimento',
+        title: 'Etapas do Polimento Técnico',
         type: 'process',
         images: [all[0], all[6], all[1], all[9]],
-        labels: ['Avaliação 50/50', 'Correção com Politriz', 'Capô Corrigido', 'Resultado Final'],
+        labels: ['Avaliação e Nivelamento', 'Correção de Verniz', 'Refino de Brilho', 'Proteção e Acabamento'],
     },
 ];
 

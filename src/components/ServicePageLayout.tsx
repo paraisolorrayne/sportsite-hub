@@ -391,8 +391,6 @@ const ProcessGallery = ({ images, labels }: { images: string[]; labels?: string[
     return (
         <>
             <div className="relative">
-                {/* Connector line behind cards */}
-                <div className="hidden md:block absolute top-[45%] left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent z-0" />
                 <div className={`grid gap-5 relative z-10 ${images.length <= 2 ? 'grid-cols-1 sm:grid-cols-2' :
                     images.length === 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' :
                         'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
@@ -419,10 +417,6 @@ const ProcessGallery = ({ images, labels }: { images: string[]; labels?: string[
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                                     <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-80 transition-opacity duration-300" />
                                 </div>
-                                {/* Step number */}
-                                <div className="absolute top-3 left-3 w-9 h-9 rounded-full brand-gradient flex items-center justify-center font-heading text-white text-base shadow-lg">
-                                    {i + 1}
-                                </div>
                                 {/* Label */}
                                 <div className="absolute bottom-0 left-0 right-0 p-4">
                                     <p className="text-white font-condensed text-sm uppercase tracking-widest">
@@ -430,14 +424,6 @@ const ProcessGallery = ({ images, labels }: { images: string[]; labels?: string[
                                     </p>
                                 </div>
                             </div>
-                            {/* Arrow connector between cards (desktop) */}
-                            {i < images.length - 1 && (
-                                <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 translate-x-full z-20">
-                                    <div className="w-5 h-5 text-primary">
-                                        <ArrowRight className="w-5 h-5" />
-                                    </div>
-                                </div>
-                            )}
                         </motion.div>
                     ))}
                 </div>

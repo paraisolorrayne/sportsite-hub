@@ -1,5 +1,5 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
-import { getServiceImages } from '@/lib/getServiceImages';
+import { getServiceImages, getServiceHeroVideo } from '@/lib/getServiceImages';
 
 const { hero, gallery } = getServiceImages('pelicula-protecao-solar');
 
@@ -12,7 +12,7 @@ const PeliculaControleSolar = () => {
       Nossas películas de Cerâmica reduzem drasticamente a entrada de calor no habitáculo, melhorando a eficiência do ar-condicionado e protegendo o interior contra o desbotamento causado pelo sol de Uberlândia.
       Com alta transparência ótica e rejeição de infravermelho, garantimos estilo com máxima proteção.`}
             heroImage={hero}
-            heroVideo="/videos/pelicula-controle-solar-hero.mp4"
+            heroVideo={getServiceHeroVideo('pelicula-protecao-solar')}
             gallery={gallery}
             pricing="A partir de R$ 400"
             benefits={[

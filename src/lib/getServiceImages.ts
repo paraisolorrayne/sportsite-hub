@@ -69,6 +69,7 @@ export function getServiceHeroVideo(videoKey: string): string | undefined {
     'vitrificacao': 'vitrificacao',
     'ppf': 'ppf',
     'higienizacao': 'higienizacao',
+    'pelicula-protecao-solar': 'pelicula',
   };
 
   const key = videoMap[videoKey] ?? videoKey;

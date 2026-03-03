@@ -182,18 +182,12 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden text-white">
-        <div className="absolute inset-0">
-          {/* Video background */}
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={heroImage}
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+          role="img"
+          aria-label="Veículo com acabamento premium após serviço de estética automotiva na Prime Detail Uberlândia"
+        >
           <div className="absolute inset-0 bg-black/70 md:bg-transparent md:bg-gradient-to-r md:from-black md:via-black/70 md:to-transparent" />
         </div>
 
@@ -263,6 +257,80 @@ const Index = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Destaque Video Section */}
+      <section className="py-24 bg-black overflow-hidden relative">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="lg:w-1/2"
+            >
+              <h2 className="text-3xl md:text-5xl font-heading mb-6 tracking-tight text-white uppercase">
+                Proteção Invisível, <br />
+                <span className="text-gradient-brand">Durabilidade Extrema</span>
+              </h2>
+              <p className="text-gray-400 text-lg mb-8 font-body leading-relaxed">
+                Assista ao processo de aplicação do nosso <Link to="/servicos/ppf-protecao-pintura" className="text-primary hover:underline">PPF Interno</Link>.
+                Proteja as áreas mais críticas do interior do seu veículo contra riscos e desgaste cotidiano com a tecnologia mais avançada do mercado.
+              </p>
+              <ul className="space-y-4 mb-10">
+                {[
+                  'Propriedade autorregenerativa',
+                  'Proteção contra raios UV',
+                  'Acabamento invisível de alto brilho',
+                  'Preservação do valor de revenda'
+                ].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 + (i * 0.1) }}
+                    className="flex items-center gap-3 text-gray-300"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full brand-gradient" />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+              <Link
+                to="/servicos/ppf-protecao-pintura"
+                className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors font-condensed uppercase tracking-widest text-sm group"
+              >
+                Conhecer mais sobre PPF <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="lg:w-1/2 relative group"
+            >
+              {/* Decorative background element */}
+              <div className="absolute -inset-4 brand-gradient opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-700" />
+
+              <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10 shadow-2xl">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src={HERO_VIDEO} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
