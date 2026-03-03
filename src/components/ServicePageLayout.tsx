@@ -35,12 +35,23 @@ interface ServicePageLayoutProps {
     galleryGroups?: GalleryGroup[];
 }
 
+/** Resolve the MIME type for a video URL based on extension */
+function getVideoMimeType(src: string): string {
+    const ext = src.split('.').pop()?.toLowerCase();
+    switch (ext) {
+        case 'mov': return 'video/quicktime';
+        case 'webm': return 'video/webm';
+        default: return 'video/mp4';
+    }
+}
+
 const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const playPromiseRef = useRef<Promise<void> | null>(null);
     const mountedRef = useRef(true);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     // Safe pause: waits for any pending play() promise before calling pause()
     const safePause = (video: HTMLVideoElement) => {
@@ -69,7 +80,10 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
                 .catch((err) => {
                     playPromiseRef.current = null;
                     releasePlayback(video);
-                    if (err.name !== 'AbortError') {
+                    if (err.name === 'NotSupportedError') {
+                        // Format not supported – show poster fallback
+                        setHasError(true);
+                    } else if (err.name !== 'AbortError') {
                         console.error('Playback failed:', err.name, err.message);
                     }
                 });
@@ -119,7 +133,7 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
     const toggle = (e: React.MouseEvent) => {
         e.stopPropagation();
         const video = videoRef.current;
-        if (!video) return;
+        if (!video || hasError) return;
         if (video.paused) {
             safePlay(video);
         } else {
@@ -127,11 +141,21 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
         }
     };
 
+    // If the video format is unsupported, fall back to poster image
+    if (hasError) {
+        return (
+            <div className="h-full w-full relative">
+                <img src={poster} alt="" className="h-full w-full object-cover" />
+            </div>
+        );
+    }
+
+    const mimeType = getVideoMimeType(src);
+
     return (
         <div className="h-full w-full relative" onClick={toggle}>
             <video
                 ref={videoRef}
-                src={isLoaded ? src : undefined}
                 poster={poster}
                 preload="metadata"
                 muted
@@ -142,7 +166,10 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
                 onEnded={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
-            />
+                onError={() => setHasError(true)}
+            >
+                {isLoaded && <source src={src} type={mimeType} />}
+            </video>
             <div
                 className={`absolute inset-0 flex items-center justify-center cursor-pointer transition-all duration-500 ${isPlaying ? 'opacity-0 scale-110 pointer-events-none' : 'opacity-100 bg-black/30'}`}
             >

@@ -4,6 +4,19 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import fs from "fs";
 
+/** Resolve MIME type from file extension */
+function getMimeType(filePath: string): string {
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeMap: Record<string, string> = {
+    ".mp4": "video/mp4",
+    ".mov": "video/quicktime",
+    ".webm": "video/webm",
+    ".heic": "image/heic",
+    ".heif": "image/heif",
+  };
+  return mimeMap[ext] || "application/octet-stream";
+}
+
 function videoRangeRequestPlugin() {
   return {
     name: "video-range-request",
@@ -22,6 +35,7 @@ function videoRangeRequestPlugin() {
         const stat = fs.statSync(filePath);
         const fileSize = stat.size;
         const range = req.headers["range"] as string | undefined;
+        const contentType = getMimeType(filePath);
 
         if (range) {
           const [startStr, endStr] = range.replace(/bytes=/, "").split("-");
@@ -33,13 +47,13 @@ function videoRangeRequestPlugin() {
             "Content-Range": `bytes ${start}-${end}/${fileSize}`,
             "Accept-Ranges": "bytes",
             "Content-Length": chunkSize,
-            "Content-Type": "video/mp4",
+            "Content-Type": contentType,
           });
           fs.createReadStream(filePath, { start, end }).pipe(res);
         } else {
           res.writeHead(200, {
             "Content-Length": fileSize,
-            "Content-Type": "video/mp4",
+            "Content-Type": contentType,
             "Accept-Ranges": "bytes",
           });
           fs.createReadStream(filePath).pipe(res);
@@ -63,7 +77,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     videoRangeRequestPlugin(),
   ].filter(Boolean),
-  assetsInclude: ["**/*.MOV", "**/*.mov"],
+  assetsInclude: ["**/*.MOV", "**/*.mov", "**/*.heic", "**/*.HEIC"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

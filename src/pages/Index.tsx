@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle2, Star, ShieldCheck, Trophy, HelpCircle, Search, Award, Wrench, FileCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SEOHead from '@/components/SEOHead';
 import heroImage from '@/assets/banner.jpeg';
+
+const HERO_VIDEO = '/videos/ppf-interno-hero.mp4';
 
 const features = [
   {
@@ -179,12 +182,18 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-          role="img"
-          aria-label="Veículo com acabamento premium após serviço de estética automotiva na Prime Detail Uberlândia"
-        >
+        <div className="absolute inset-0">
+          {/* Video background */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={heroImage}
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={HERO_VIDEO} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-black/70 md:bg-transparent md:bg-gradient-to-r md:from-black md:via-black/70 md:to-transparent" />
         </div>
 

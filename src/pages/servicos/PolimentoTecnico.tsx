@@ -7,14 +7,20 @@ const { hero, all } = getServiceImages('polimento');
 // Imagens (ordem alfabética):
 // 0: IMG_0992 — Capô preto metade polido / metade sem polir (hero — demonstração 50/50)
 // 1: IMG_4500 — Hyundai preto capô polido resultado
-// 2: IMG_9439 — Audi R8 vermelho sendo polido com produtos
-// 3: b90d5502 — Honda Civic preto resultado final
+// 2: IMG_9318 — (convertido de .heic)
+// 3: IMG_9424 — (convertido de .heic)
+// 4: IMG_9425 — (convertido de .heic)
+// 5: IMG_9426 — (convertido de .heic)
+// 6: IMG_9439 — Audi R8 vermelho sendo polido com produtos
+// 7: IMG_9571 — (convertido de .heic)
+// 8: IMG_9572 — (convertido de .heic)
+// 9: b90d5502 — Honda Civic preto resultado final
 
 const galleryGroups: GalleryGroup[] = [
     {
         title: 'Processo de Polimento',
         type: 'process',
-        images: [all[0], all[2], all[1], all[3]],
+        images: [all[0], all[6], all[1], all[9]],
         labels: ['Avaliação 50/50', 'Correção com Politriz', 'Capô Corrigido', 'Resultado Final'],
     },
 ];

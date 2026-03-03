@@ -19,9 +19,9 @@ const { hero, all } = getServiceImages('higienizacao');
 const galleryGroups: GalleryGroup[] = [
     {
         title: 'Antes e Depois — Banco de Couro',
-        type: 'before-after',
+        type: 'process',
         images: [all[1], all[3]],
-        // Banco caramelo sujo → Banco branco limpo
+        labels: ['Antes', 'Depois'],
     },
     {
         title: 'Detalhes do Processo',

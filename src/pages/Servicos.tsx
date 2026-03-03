@@ -6,12 +6,23 @@ import SEOHead from '@/components/SEOHead';
 import { claimPlayback, releasePlayback } from '@/lib/videoRegistry';
 import { getServiceImages } from '@/lib/getServiceImages';
 
+/** Resolve the MIME type for a video URL based on extension */
+function getVideoMimeType(src: string): string {
+  const ext = src.split('.').pop()?.toLowerCase();
+  switch (ext) {
+    case 'mov': return 'video/quicktime';
+    case 'webm': return 'video/webm';
+    default: return 'video/mp4';
+  }
+}
+
 // Each video section manages its own ref, state and IntersectionObserver
 const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
   const mountedRef = useRef(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   // Safe pause: waits for any pending play() promise before calling pause()
   const safePause = (video: HTMLVideoElement) => {
@@ -40,7 +51,9 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
         .catch((err) => {
           playPromiseRef.current = null;
           releasePlayback(video);
-          if (err.name !== 'AbortError') {
+          if (err.name === 'NotSupportedError') {
+            setHasError(true);
+          } else if (err.name !== 'AbortError') {
             console.error('Playback failed:', err.name, err.message);
           }
         });
@@ -88,7 +101,7 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
   const toggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || hasError) return;
 
     if (video.paused) {
       safePlay(video);
@@ -97,11 +110,21 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
     }
   };
 
+  // If the video format is unsupported, fall back to poster image
+  if (hasError) {
+    return (
+      <div className="h-full w-full relative">
+        <img src={poster} alt="" className="h-full w-full object-cover" />
+      </div>
+    );
+  }
+
+  const mimeType = getVideoMimeType(src);
+
   return (
     <div className="h-full w-full relative group cursor-pointer" onClick={toggle}>
       <video
         ref={videoRef}
-        src={src}
         poster={poster}
         preload="metadata"
         muted
@@ -112,7 +135,10 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
         onPlay={() => setIsPlaying(true)}
         onPause={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
         onEnded={() => { setIsPlaying(false); if (videoRef.current) releasePlayback(videoRef.current); }}
-      />
+        onError={() => setHasError(true)}
+      >
+        <source src={src} type={mimeType} />
+      </video>
       <div
         className={`absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none ${isPlaying ? 'opacity-0 scale-110' : 'opacity-100 bg-black/40'
           }`}

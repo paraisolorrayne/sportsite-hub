@@ -186,6 +186,55 @@ const BeforeAfterSlider = ({ entry }: { entry: BeforeAfterEntry }) => {
     );
 };
 
+/* ─── Simple Side-by-Side Before/After Display ─── */
+const SimpleBeforeAfterDisplay = ({ entry, onImageClick }: { entry: BeforeAfterEntry; onImageClick: (src: string, label: string) => void }) => {
+    return (
+        <div className="grid grid-cols-2 gap-4 md:gap-6">
+            {/* Before */}
+            <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="relative group cursor-pointer"
+                onClick={() => onImageClick(entry.before, `${entry.label} — Antes`)}
+            >
+                <img
+                    src={entry.before}
+                    alt="Antes"
+                    className="w-full h-auto rounded-sm border border-border/50 group-hover:border-muted-foreground/50 transition-all"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute top-3 left-3 px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-xs font-condensed uppercase tracking-widest rounded-sm">
+                    Antes
+                </div>
+            </motion.div>
+
+            {/* After */}
+            <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative group cursor-pointer"
+                onClick={() => onImageClick(entry.after, `${entry.label} — Depois`)}
+            >
+                <img
+                    src={entry.after}
+                    alt="Depois"
+                    className="w-full h-auto rounded-sm border border-primary/50 group-hover:border-primary transition-all"
+                />
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute top-3 right-3 px-3 py-1.5 bg-primary/90 backdrop-blur-sm text-white text-xs font-condensed uppercase tracking-widest rounded-sm">
+                    Depois
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
 /* ─── Filter Tabs ─── */
 const serviceFilters = [
     { label: 'Todos', value: 'all' },
@@ -197,10 +246,13 @@ const serviceFilters = [
 /* ─── Main Component ─── */
 const Resultados = () => {
     const [activeFilter, setActiveFilter] = useState('all');
+    const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
 
     const filteredEntries = activeFilter === 'all'
         ? allBeforeAfter
         : allBeforeAfter.filter((e) => e.service === activeFilter);
+
+    const couroEntry = allBeforeAfter.find(e => e.label === 'Banco de Couro');
 
     return (
         <>
@@ -219,11 +271,66 @@ const Resultados = () => {
                     >
                         <div className="h-1 w-16 brand-gradient mb-6 mx-auto" />
                         <h1 className="text-4xl md:text-6xl font-heading mb-4 text-white">
-                            Antes & <span className="text-gradient-brand">Depois</span>
+                            Processo & <span className="text-gradient-brand">Resultados</span>
                         </h1>
                         <p className="text-muted-foreground">
-                            Resultados reais de cada serviço. Arraste para comparar o antes e depois
-                            das transformações realizadas no nosso centro técnico em Uberlândia.
+                            Acompanhe o passo a passo e os resultados reais do nosso trabalho.
+                            Transformações que falam por si próprias.
+                        </p>
+                    </motion.div>
+
+                    {/* Banco de Couro Featured Section */}
+                    {couroEntry && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="mb-20 p-8 md:p-12 rounded-sm border border-border/50 bg-gradient-to-br from-emerald-950/30 via-background to-background backdrop-blur-sm overflow-hidden relative"
+                        >
+                            <div className="absolute inset-0 opacity-30">
+                                <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+                            </div>
+                            
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${couroEntry.serviceColor} flex items-center justify-center`}>
+                                        <Sparkles className="w-5 h-5 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-condensed uppercase tracking-[0.2em] text-emerald-400">
+                                            {couroEntry.service}
+                                        </p>
+                                        <h2 className="text-3xl md:text-4xl font-heading text-white">
+                                            {couroEntry.label}
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <p className="text-muted-foreground mb-8 max-w-2xl">
+                                    As imagens falam por si. Veja como nossa técnica de higienização interna transforma o couro, removendo toda sujidade acumulada e deixando o interior do seu veículo como novo.
+                                </p>
+
+                                <SimpleBeforeAfterDisplay
+                                    entry={couroEntry}
+                                    onImageClick={(src, label) => setLightbox({ src, label })}
+                                />
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* All Transformations Section */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="mb-12 text-center"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-heading text-white mb-3">
+                            Todas as <span className="text-gradient-brand">Transformações</span>
+                        </h2>
+                        <p className="text-muted-foreground max-w-xl mx-auto">
+                            Explore nossa galeria completa com sliders interativos comparando cada detalhe dos serviços.
                         </p>
                     </motion.div>
 
@@ -317,6 +424,14 @@ const Resultados = () => {
                     </motion.div>
                 </div>
             </section>
+
+            {lightbox && (
+                <ImageLightbox
+                    src={lightbox.src}
+                    label={lightbox.label}
+                    onClose={() => setLightbox(null)}
+                />
+            )}
         </>
     );
 };
