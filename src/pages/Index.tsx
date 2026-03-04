@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SEOHead from '@/components/SEOHead';
 import heroImage from '@/assets/banner.jpeg';
+import cuidadoImage from '@/assets/cuidado.jpg';
 
 const HERO_VIDEO = '/videos/ppf-interno-hero.mp4';
+const PROCESS_VIDEO = '/videos/processo-detail.mp4';
 
 const features = [
   {
@@ -273,19 +275,19 @@ const Index = () => {
               className="lg:w-1/2"
             >
               <h2 className="text-3xl md:text-5xl font-heading mb-6 tracking-tight text-white uppercase">
-                Proteção Invisível, <br />
-                <span className="text-gradient-brand">Durabilidade Extrema</span>
+                Excelência e <br />
+                <span className="text-gradient-brand">Cuidado em cada Detalhe</span>
               </h2>
               <p className="text-gray-400 text-lg mb-8 font-body leading-relaxed">
-                Assista ao processo de aplicação do nosso <Link to="/servicos/ppf-protecao-pintura" className="text-primary hover:underline">PPF Interno</Link>.
-                Proteja as áreas mais críticas do interior do seu veículo contra riscos e desgaste cotidiano com a tecnologia mais avançada do mercado.
+                Nossos serviços são pautados pela precisão e pelo uso das tecnologias mais avançadas do mercado.
+                Cada veículo que entra em nossa oficina recebe um tratamento exclusivo, garantindo resultados que superam expectativas.
               </p>
               <ul className="space-y-4 mb-10">
                 {[
-                  'Propriedade autorregenerativa',
-                  'Proteção contra raios UV',
-                  'Acabamento invisível de alto brilho',
-                  'Preservação do valor de revenda'
+                  'Técnicas de detalhamento avançado',
+                  'Produtos de alta performance',
+                  'Proteção duradoura e brilho intenso',
+                  'Preservação profunda do valor do veículo'
                 ].map((item, i) => (
                   <motion.li
                     key={i}
@@ -301,10 +303,10 @@ const Index = () => {
                 ))}
               </ul>
               <Link
-                to="/servicos/ppf-protecao-pintura"
+                to="/servicos"
                 className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors font-condensed uppercase tracking-widest text-sm group"
               >
-                Conhecer mais sobre PPF <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Conheça nossos serviços <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
 
@@ -315,19 +317,14 @@ const Index = () => {
               transition={{ duration: 0.8 }}
               className="lg:w-1/2 relative group"
             >
-              {/* Decorative background element */}
               <div className="absolute -inset-4 brand-gradient opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-700" />
 
               <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10 shadow-2xl">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                >
-                  <source src={HERO_VIDEO} type="video/mp4" />
-                </video>
+                <img
+                  src={cuidadoImage}
+                  alt="Cuidado em cada detalhe na Prime Detail"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </motion.div>
@@ -381,6 +378,29 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Video do Processo */}
+      <section className="py-12 bg-black">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden border border-white/10 shadow-2xl"
+          >
+            <video
+              src={PROCESS_VIDEO}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/logo_prime.png"
+            />
+          </motion.div>
         </div>
       </section>
 

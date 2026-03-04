@@ -18,10 +18,10 @@ const { hero, all } = getServiceImages('higienizacao');
 
 const galleryGroups: GalleryGroup[] = [
     {
-        title: 'Antes e Depois — Banco de Couro',
+        title: 'Banco de Couro',
         type: 'process',
         images: [all[1], all[3]],
-        labels: ['Antes', 'Depois'],
+        labels: ['', ''],
     },
     {
         title: 'Detalhes do Processo',
@@ -36,9 +36,9 @@ const HigienizacaoInterna = () => {
         <ServicePageLayout
             title="Higienização Interna"
             subtitle="Saúde e bem-estar dentro do seu carro com limpeza profunda de nível hospitalar."
-            description={`A Higienização Interna da Prime Detail remove sujeiras invisíveis, ácaros, fungos e bactérias que se acumulam nos tecidos e carpetes. 
-      Utilizamos extratoras profissionais e produtos bactericidas de última geração que não agridem as fibras dos tecidos nem ressecam o couro. 
-      Deixe o interior do seu veículo com aspecto e aroma de novo.`}
+            description={`As imagens falam por si. Veja como nossa técnica de higienização interna transforma o couro, removendo toda sujidade acumulada e deixando o interior do seu veículo como novo.
+            
+            A Higienização Interna da Prime Detail remove sujeiras invisíveis, ácaros, fungos e bactérias que se acumulam nos tecidos e carpetes. Utilizamos extratoras profissionais e produtos bactericidas de última geração que não agridem as fibras dos tecidos nem ressecam o couro.`}
             heroImage={hero}
             heroVideo="/videos/higienizacao-hero.mp4"
             pricing="A partir de R$ 350"

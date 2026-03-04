@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { Trophy, Users, ShieldCheck, Heart } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 import igorCeo from '@/assets/igor-ceo.jpeg';
+import motoImage from '@/assets/sobre/moto.jpg';
+import timeImage from '@/assets/sobre/time.jpg';
 
 const Sobre = () => {
   return (
@@ -49,6 +51,55 @@ const Sobre = () => {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                 <p className="text-white font-heading text-xl uppercase tracking-wider">Igor</p>
                 <p className="text-primary text-xs uppercase tracking-widest font-condensed font-bold">Diretor Técnico & Fundador</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-24 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-3xl md:text-5xl font-heading mb-6 text-white uppercase">
+              Nosso <span className="text-gradient-brand">Universo</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Dos superesportivos de duas rodas aos sedãs de luxo, nossa equipe está preparada para entregar o melhor resultado.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative aspect-video rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={motoImage}
+                alt="Detalhamento em motocicletas de alta performance"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                <h4 className="text-white font-heading text-xl uppercase">Performance em Duas Rodas</h4>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="relative aspect-video rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={timeImage}
+                alt="Nossa equipe de especialistas"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                <h4 className="text-white font-heading text-xl uppercase">Equipe de Especialistas</h4>
               </div>
             </motion.div>
           </div>
