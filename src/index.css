@@ -61,6 +61,13 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -68,6 +75,17 @@
     font-family: 'Barlow', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    width: 100%;
+    min-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    width: 100%;
+    min-width: 100%;
+    overflow-x: hidden;
   }
 
   h1,

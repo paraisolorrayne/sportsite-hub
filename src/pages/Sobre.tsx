@@ -1,9 +1,49 @@
 import { motion } from 'framer-motion';
-import { Trophy, Users, ShieldCheck, Heart } from 'lucide-react';
+import { Trophy, Users, ShieldCheck, Heart, Warehouse, Lightbulb, Sparkles, CarFront } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 import igorCeo from '@/assets/igor-ceo.jpeg';
 import motoImage from '@/assets/sobre/moto.jpg';
 import timeImage from '@/assets/sobre/time.jpg';
+
+// Imagens do espaço
+import espacoRecepcao from '@/assets/espaco/recepcao.jpeg';
+import espacoAreaServico from '@/assets/espaco/area-servico.jpeg';
+import espacoCorredorIluminado from '@/assets/espaco/corredor-iluminado.jpeg';
+import espacoPorscheNoEspaco from '@/assets/espaco/porsche-no-espaco.jpeg';
+import espacoBayLavagem from '@/assets/espaco/bay-lavagem.jpeg';
+import espacoPorscheElevador from '@/assets/espaco/porsche-elevador.jpeg';
+
+const espacoFeatures = [
+  {
+    icon: Warehouse,
+    title: 'Estrutura Ampla',
+    text: 'Mais de 300m² projetados com piso modular profissional, garantindo organização e segurança para cada veículo.',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Iluminação Profissional',
+    text: 'Painéis LED hexagonais e barras de luz vertical calibradas para inspeção minuciosa de cada detalhe da pintura.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Ambiente Controlado',
+    text: 'Climatização dedicada e área coberta que protegem o veículo durante todo o processo de transformação.',
+  },
+  {
+    icon: CarFront,
+    title: 'Elevador Automotivo',
+    text: 'Elevador pantográfico profissional que permite acesso 360° ao veículo, alcançando cada detalhe escondido.',
+  },
+];
+
+const espacoImages = [
+  { src: espacoRecepcao, alt: 'Recepção Prime Detail com logo iluminada e sofás premium em Uberlândia', label: 'Recepção' },
+  { src: espacoAreaServico, alt: 'Área de serviço com piso modular profissional e iluminação LED', label: 'Área de Serviço' },
+  { src: espacoCorredorIluminado, alt: 'Corredor iluminado com iluminação lateral LED no centro de estética automotiva', label: 'Corredor Técnico' },
+  { src: espacoPorscheNoEspaco, alt: 'Porsche 911 no espaço Prime Detail para polimento e vitrificação', label: 'Detalhamento Premium' },
+  { src: espacoBayLavagem, alt: 'Bay de lavagem e preparação com carro no elevador hidráulico', label: 'Bay de Preparação' },
+  { src: espacoPorscheElevador, alt: 'Porsche 911 no elevador automotivo sendo higienizado por técnico', label: 'Elevador Profissional' },
+];
 
 const Sobre = () => {
   return (
@@ -102,6 +142,167 @@ const Sobre = () => {
                 <h4 className="text-white font-heading text-xl uppercase">Equipe de Especialistas</h4>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nosso Espaço */}
+      <section className="py-24 bg-card overflow-hidden">
+        <div className="container mx-auto px-4">
+          {/* Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="h-1 w-16 brand-gradient mb-6" />
+              <h2 className="text-3xl md:text-5xl font-heading text-white uppercase leading-tight">
+                Nosso <span className="text-gradient-brand">Espaço</span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Projetado para entregar excelência em cada serviço, nosso espaço combina
+                infraestrutura profissional com uma estética pensada para quem valoriza o cuidado automotivo.
+                Cada detalhe do ambiente foi planejado para garantir o melhor resultado para o seu carro — e a melhor experiência para você.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Mosaic Gallery */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20">
+            {/* Image 1 — Recepção (wide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0 }}
+              className="col-span-2 row-span-1 relative aspect-video rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[0].src}
+                alt={espacoImages[0].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[0].label}</span>
+              </div>
+            </motion.div>
+
+            {/* Image 2 — Área Serviço (wide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="col-span-2 row-span-1 relative aspect-video rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[1].src}
+                alt={espacoImages[1].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[1].label}</span>
+              </div>
+            </motion.div>
+
+            {/* Image 3 — Corredor (regular) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="col-span-2 md:col-span-1 relative aspect-video md:aspect-[4/3] rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[2].src}
+                alt={espacoImages[2].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[2].label}</span>
+              </div>
+            </motion.div>
+
+            {/* Image 4 — Porsche vertical (tall) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="col-span-1 row-span-2 relative rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[3].src}
+                alt={espacoImages[3].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[3].label}</span>
+              </div>
+            </motion.div>
+
+            {/* Image 5 — Bay Lavagem (regular) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.25 }}
+              className="col-span-2 md:col-span-1 relative aspect-video md:aspect-[4/3] rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[4].src}
+                alt={espacoImages[4].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[4].label}</span>
+              </div>
+            </motion.div>
+
+            {/* Image 6 — Porsche Elevador (regular) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="col-span-1 relative rounded-lg overflow-hidden border border-border group"
+            >
+              <img
+                src={espacoImages[5].src}
+                alt={espacoImages[5].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end">
+                <span className="text-white font-heading text-sm md:text-base uppercase tracking-wider">{espacoImages[5].label}</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {espacoFeatures.map((feature, i) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative p-6 rounded-lg border border-border bg-secondary/30 backdrop-blur-sm group hover:border-primary/40 transition-all duration-300"
+              >
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <feature.icon className="w-9 h-9 text-primary mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10" />
+                <h3 className="font-heading text-lg text-white mb-2 uppercase tracking-wider relative z-10">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed relative z-10">{feature.text}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
