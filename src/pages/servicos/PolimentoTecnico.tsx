@@ -33,7 +33,7 @@ const PolimentoTecnico = () => {
             description={`O Polimento Técnico da Prime Detail não é apenas um "lustro". É um processo de correção de verniz que remove riscos superficiais (swirl marks), manchas de chuva ácida, oxidação e hologramas causados por polimentos mal executados.
       Utilizamos máquinas de última geração (Roto-orbitais) e compostos polidores de alta tecnologia que preservam a espessura do verniz enquanto devolvem a profundidade e o reflexo máximo da cor.`}
             heroImage={hero}
-            heroVideo="/videos/polimento-hero.mp4"
+            heroVideo="/videos/polimento-site.mp4"
             pricing="A partir de R$ 500"
             benefits={[
                 "Remoção definitiva de riscos e marcas de lavagem.",

@@ -127,7 +127,6 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
         ref={videoRef}
         poster={poster}
         preload="metadata"
-        muted
         loop
         playsInline
         webkit-playsinline="true"
@@ -176,7 +175,7 @@ const services = [
     description: 'Remoção de riscos e hologramas, recuperando o brilho original. Essencial antes da vitrificação.',
     price: 'A partir de R$ 500',
     heroImage: polimento.hero,
-    heroVideo: '/videos/polimento-hero.mp4',
+    heroVideo: '/videos/polimento-site.mp4',
     gallery: polimento.gallery,
     slug: 'polimento-tecnico',
   },
@@ -289,7 +288,7 @@ const Servicos = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7 }}
-                  className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-black rounded-sm"
+                  className="relative aspect-[3/4] overflow-hidden bg-black rounded-sm"
                 >
                   {service.heroVideo ? (
                     <ServiceMedia src={service.heroVideo} poster={service.heroImage} />

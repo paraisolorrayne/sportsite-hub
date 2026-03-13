@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
+import Links from "./pages/Links";
 
 // Service Detail Pages
 import LavagemDetalhada from "./pages/servicos/LavagemDetalhada";
@@ -31,6 +32,10 @@ const App = () => (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Standalone Pages */}
+          <Route path="/links" element={<Links />} />
+
+          {/* Application Layout Pages */}
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/sobre" element={<Sobre />} />

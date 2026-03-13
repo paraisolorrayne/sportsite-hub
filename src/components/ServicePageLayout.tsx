@@ -158,7 +158,6 @@ const ServiceMedia = ({ src, poster }: { src: string; poster: string }) => {
                 ref={videoRef}
                 poster={poster}
                 preload="metadata"
-                muted
                 loop
                 playsInline
                 webkit-playsinline="true"
@@ -475,11 +474,7 @@ const ServicePageLayout = ({
             {/* Hero Section */}
             <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    {heroVideo ? (
-                        <ServiceMedia src={heroVideo} poster={heroImage} />
-                    ) : (
-                        <img src={heroImage} alt={`${title} – serviço de estética automotiva Prime Detail Uberlândia`} className="h-full w-full object-cover" />
-                    )}
+                    <img src={heroImage} alt={`${title} – serviço de estética automotiva Prime Detail Uberlândia`} className="h-full w-full object-cover" />
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
 
@@ -513,6 +508,12 @@ const ServicePageLayout = ({
                             <div className="prose prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed max-w-none">
                                 <p className="whitespace-pre-line">{description}</p>
                             </div>
+
+                            {heroVideo && (
+                                <div className="mt-8 aspect-video rounded-lg overflow-hidden border border-border shadow-2xl relative">
+                                    <ServiceMedia src={heroVideo} poster={heroImage} />
+                                </div>
+                            )}
 
                             <div className="mt-12 p-6 md:p-8 bg-card border border-border rounded-lg">
                                 <h3 className="text-xl font-heading mb-4 text-white uppercase tracking-widest">{pricing.includes('A partir') ? 'Investimento Estimado' : 'Orçamento'}</h3>

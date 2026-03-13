@@ -176,14 +176,14 @@ const Sobre = () => {
           </div>
 
           {/* Mosaic Gallery */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20">
             {/* Image 1 — Recepção (wide) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0 }}
-              className="col-span-2 row-span-1 relative aspect-video rounded-lg overflow-hidden border border-border group"
+              className="sm:col-span-2 row-span-1 relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[0].src}
@@ -201,7 +201,7 @@ const Sobre = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="col-span-2 row-span-1 relative aspect-video rounded-lg overflow-hidden border border-border group"
+              className="sm:col-span-2 row-span-1 relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[1].src}
@@ -219,7 +219,7 @@ const Sobre = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.15 }}
-              className="col-span-2 md:col-span-1 relative aspect-video md:aspect-[4/3] rounded-lg overflow-hidden border border-border group"
+              className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[2].src}
@@ -237,7 +237,7 @@ const Sobre = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="col-span-1 row-span-2 relative rounded-lg overflow-hidden border border-border group"
+              className="relative aspect-[3/4] sm:aspect-auto sm:row-span-2 rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[3].src}
@@ -255,7 +255,7 @@ const Sobre = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.25 }}
-              className="col-span-2 md:col-span-1 relative aspect-video md:aspect-[4/3] rounded-lg overflow-hidden border border-border group"
+              className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[4].src}
@@ -273,7 +273,7 @@ const Sobre = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="col-span-1 relative rounded-lg overflow-hidden border border-border group"
+              className="relative aspect-[4/3] sm:aspect-auto rounded-lg overflow-hidden border border-border group"
             >
               <img
                 src={espacoImages[5].src}

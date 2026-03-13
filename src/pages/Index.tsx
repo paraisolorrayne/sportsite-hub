@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SEOHead from '@/components/SEOHead';
 import heroImage from '@/assets/banner.jpeg';
-import cuidadoImage from '@/assets/cuidado.jpg';
+import cuidadoImage from '@/assets/espaco/bay-lavagem.jpeg';
 
 const HERO_VIDEO = '/videos/ppf-interno-hero.mp4';
 const PROCESS_VIDEO = '/videos/processo-detail.mp4';
@@ -319,7 +319,7 @@ const Index = () => {
             >
               <div className="absolute -inset-4 brand-gradient opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-700" />
 
-              <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative aspect-[4/5] md:aspect-video rounded-sm overflow-hidden border border-white/10 shadow-2xl">
                 <img
                   src={cuidadoImage}
                   alt="Cuidado em cada detalhe na Prime Detail"
@@ -398,6 +398,7 @@ const Index = () => {
               muted
               loop
               playsInline
+              webkit-playsinline="true"
               poster="/logo_prime.png"
             />
           </motion.div>
