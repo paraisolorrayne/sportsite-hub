@@ -10,7 +10,7 @@ import espacoRecepcao from '@/assets/espaco/recepcao.jpeg';
 import espacoAreaServico from '@/assets/espaco/area-servico.jpeg';
 import espacoCorredorIluminado from '@/assets/espaco/corredor-iluminado.jpeg';
 import espacoPorscheNoEspaco from '@/assets/espaco/porsche-no-espaco.jpeg';
-import espacoBayLavagem from '@/assets/espaco/bay-lavagem.jpeg';
+import espacoBayLavagem from '@/assets/espaco/espaco-home.jpeg';
 import espacoPorscheElevador from '@/assets/espaco/porsche-elevador.jpeg';
 
 const espacoFeatures = [

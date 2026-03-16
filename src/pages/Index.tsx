@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SEOHead from '@/components/SEOHead';
 import heroImage from '@/assets/banner.jpeg';
-import cuidadoImage from '@/assets/espaco/bay-lavagem.jpeg';
+import cuidadoImage from '@/assets/espaco/espaco-home.jpeg';
 
 const HERO_VIDEO = '/videos/ppf-interno-hero.mp4';
 const PROCESS_VIDEO = '/videos/processo-detail.mp4';
@@ -378,30 +378,6 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Video do Processo */}
-      <section className="py-12 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden border border-white/10 shadow-2xl"
-          >
-            <video
-              src={PROCESS_VIDEO}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              webkit-playsinline="true"
-              poster="/logo_prime.png"
-            />
-          </motion.div>
         </div>
       </section>
 

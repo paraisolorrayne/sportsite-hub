@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Youtube, Phone, MoreVertical } from 'lucide-react';
+import { Instagram, Phone, MapPin } from 'lucide-react';
 import { useEffect } from 'react';
 import SEOHead from '@/components/SEOHead';
 
@@ -10,9 +10,9 @@ const WhatsappIconColored = () => (
   </div>
 );
 
-const YoutubeIconColored = () => (
-  <div className="w-10 h-10 rounded-xl bg-[#FF0000] flex items-center justify-center flex-shrink-0">
-    <Youtube className="w-6 h-6 text-white" fill="white" />
+const MapsIconColored = () => (
+  <div className="w-10 h-10 rounded-xl bg-[#EA4335] flex items-center justify-center flex-shrink-0">
+    <MapPin className="w-6 h-6 text-white" fill="white" />
   </div>
 );
 
@@ -64,8 +64,8 @@ const LinkButton = ({
 const Links = () => {
   // Configurações de Links
   const WHATSAPP_URL = "https://wa.me/5534984033956?text=Ol%C3%A1%21+Vim+pelo+link+do+Instagram+e+gostaria+de+atendimento.";
-  const INSTAGRAM_URL = "https://www.instagram.com/primedetailuberlandia/";
-  const YOUTUBE_URL = "https://www.youtube.com/@primedetail"; // Placeholder, ajuste se necessário
+  const INSTAGRAM_URL = "https://www.instagram.com/primedetaill/";
+  const MAPS_URL = "https://maps.app.goo.gl/qyiARzGzfQNJpAmHA";
 
   useEffect(() => {
     // Definir background do body para preto especificamente nesta página
@@ -87,15 +87,7 @@ const Links = () => {
         {/* Container Centralizado (max largura estilo mobile) */}
         <div className="w-full max-w-[680px] flex flex-col items-center">
           
-          {/* Menu / Share icons top (opcional, imitando a UI) */}
-          <div className="w-full flex justify-between px-2 mb-8">
-            <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors">
-              <MoreVertical className="w-5 h-5" />
-            </button>
-            <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            </button>
-          </div>
+
 
           {/* Logo */}
           <motion.div 
@@ -150,9 +142,9 @@ const Links = () => {
               delay={0.3}
             />
             <LinkButton 
-              href={YOUTUBE_URL}
-              icon={YoutubeIconColored}
-              title="Conheça a Prime! 💎"
+              href={MAPS_URL}
+              icon={MapsIconColored}
+              title="Localização"
               delay={0.4}
             />
             <LinkButton 
