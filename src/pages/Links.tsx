@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Phone, MapPin } from 'lucide-react';
+import { Instagram, Phone, MapPin, MoreVertical } from 'lucide-react';
 import { useEffect } from 'react';
 import SEOHead from '@/components/SEOHead';
 
